@@ -1,0 +1,99 @@
+////////////////////////////////////////////////////////////////////////////////
+//! \file   Interfaces.idl
+//! \brief  The COM interfaces.
+//! \author Chris Oldwood
+
+import "unknwn.idl";
+import "oaidl.idl";
+
+// Forward declarations.
+interface IDDEClient;
+interface IDDEConversation;
+interface IDDEConversations;
+
+////////////////////////////////////////////////////////////////////////////////
+//! The DDE Client interface.
+
+[
+	dual,
+	object,
+	nonextensible,
+	uuid(AE884ACD-E365-4574-9798-5269BA54FD31),
+	helpstring("The interface to the DDE Client")
+]
+interface IDDEClient : IDispatch
+{
+	//! Query for the collection of all running servers.
+	HRESULT RunningServers([out, retval] SAFEARRAY(VARIANT)* ppServers);
+
+	//! Query for the topics supported by the server.
+	HRESULT GetServerTopics([in] BSTR bstrService, [out, retval] SAFEARRAY(VARIANT)* ppTopics);
+
+	//! Open a conversation.
+	HRESULT OpenConversation([in] BSTR bstrService, [in] BSTR bstrTopic, [out, retval] IDDEConversation** ppIDDEConv);
+
+	//! Query for the collection of all open conversations.
+	HRESULT Conversations([out, retval] IDDEConversations** ppIDDEConvs);
+
+	//! Request an item in CF_TEXT format.
+	HRESULT RequestTextItem([in] BSTR bstrService, [in] BSTR bstrTopic, [in] BSTR bstrItem, [out, retval] BSTR* pbstrValue);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+//! The DDE Conversation interface.
+
+[
+	dual,
+	object,
+	nonextensible,
+	uuid(454658F4-7C55-4604-82D6-BAA021AFBF38),
+	helpstring("The interface to a DDE Conversation")
+]
+interface IDDEConversation : IDispatch
+{
+	//! Set the Service name.
+	[propput] HRESULT Service([in] BSTR bstrService);
+
+	//! Get the Service name.
+	[propget] HRESULT Service([out, retval] BSTR* pbstrService);
+
+	//! Set the Topic name.
+	[propput] HRESULT Topic([in] BSTR bstrTopic);
+
+	//! Get the Topic name.
+	[propget] HRESULT Topic([out, retval] BSTR* pbstrTopic);
+
+	//! Open the conversation.
+	HRESULT Open();
+
+	//! Query if the conversation is open.
+	HRESULT IsOpen([out, retval] VARIANT_BOOL* pbIsOpen);
+
+	//! Close the conversation.
+	HRESULT Close();
+
+	//! Request an item in CF_TEXT format.
+	HRESULT RequestTextItem([in] BSTR bstrItem, [out, retval] BSTR* pbstrValue);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+//! The DDE Conversations interface.
+
+[
+	dual,
+	object,
+	nonextensible,
+	uuid(020B0E14-6DDD-4efe-BA88-41691EF80B24),
+	helpstring("The interface to a collection of DDE Conversations")
+]
+interface IDDEConversations : IDispatch
+{
+	//! Get the collection count.
+	[propget] HRESULT Count([out, retval] long* plCount);
+
+	//! Get the enumerator for the collection.
+	[propget, restricted, id(DISPID_NEWENUM)] HRESULT _NewEnum([out, retval] IUnknown** ppEnum);
+
+	//! Get an item from the collection by index.
+	[propget] HRESULT Item([in] long nIndex, [out, retval] IDDEConversation** ppIDDEConv);
+}

@@ -1,0 +1,12 @@
+Version 1.0
+===========
+
+- Basic DDE client with support for requesting CF_TEXT values.
+- Enumeration of running DDE servers.
+- Creation of conversations using monikers.
+
+
+Chris Oldwood 
+[gort@cix.co.uk]
+
+12th July 2007

@@ -1,0 +1,79 @@
+////////////////////////////////////////////////////////////////////////////////
+//! \file   TypeLibrary.idl
+//! \brief  The COM server type library.
+//! \author Chris Oldwood
+
+#include "Interfaces.idl"
+#include "oleidl.idl"
+
+[
+	uuid(A8E52045-C20E-4a12-AD23-1CC7813019E2),
+	helpstring("DDECOMClient Type Library"),
+	version(1.0)
+]
+library DDECOMClientLib
+{
+	importlib("STDOLE2.TLB");
+
+	//
+	// Interfaces.
+	//
+
+	interface IDDEClient;
+	interface IDDEConversation;
+	interface IDDEConversations;
+
+	//
+	// Classes.
+	//
+
+	////////////////////////////////////////////////////////////////////////////
+	//! The DDE Client class.
+
+	[
+		uuid(DC44F42E-3650-45ff-BA6D-97130C708076),
+		helpstring("The DDE Client")
+	]
+	coclass DDEClient
+	{
+		[default] interface IDDEClient;
+	};
+
+	////////////////////////////////////////////////////////////////////////////
+	//! The DDE Conversation class.
+
+	[
+		uuid(FFC84CFE-CD9C-40b5-9ECE-ACE28C02C816),
+		helpstring("A DDE Conversation"),
+	]
+	coclass DDEConversation
+	{
+		[default] interface IDDEConversation;
+	};
+
+	////////////////////////////////////////////////////////////////////////////
+	//! The DDE Conversations class.
+
+	[
+		uuid(EA999047-1184-4e22-A176-D588BDE49706),
+		helpstring("A collection of DDE Conversations"),
+		noncreatable
+	]
+	coclass DDEConversations
+	{
+		[default] interface IDDEConversations;
+	};
+
+	////////////////////////////////////////////////////////////////////////////
+	//! The DDE Class Factory used by the class+item moniker..
+
+	[
+		uuid(5C789139-310C-45c7-B701-FE6FEB0DCA29),
+		helpstring("The class factory used by the class+item moniker"),
+	]
+	coclass DDEClassFactory
+	{
+		[default] interface IClassFactory;
+		interface IOleItemContainer;
+	};
+};
