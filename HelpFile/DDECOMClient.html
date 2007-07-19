@@ -19,7 +19,235 @@ td		{ font-family: Verdana, Arial; font-size: 10pt; align: left }
 <h5>Introduction</h5>
 
 <p>
+This is a COM component to allow scripting of DDE Servers. It is an Automation
+Server (i.e. it is programmable via IDispatch) that houses two fundamental COM
+classes. The first is a <i>DDE Client</i>, which is a Singleton style object
+that can be used to make ad-hoc DDE queries and querying for running DDE
+servers. The second is for a specific <i>DDE Conversation</i> and can be used
+as an optimisation when you need to query many values from the same DDE source.
 </p>
+<p>
+At present it only supports the requesting of data in CF_TEXT format, which is
+then converted to UNICODE to pass back over the COM interface. Most of the DDE
+servers I have dealt with were ANSI based and given the nature of scripting I
+felt this was probably good enough for a first attempt. If there is a need to
+allow access in other formats (e.g. CF_UNICODETEXT, CF_DIF etc) I will add to
+the API. It also only supports DDE Requests [XTYP_REQUEST], but could be
+easily extended to allow Pokes [XTYP_POKE] and Executes [XTYP_EXECUTE].
+</p>
+<p>
+The other major feature of DDE that is missing is the asynchronous updating of
+values via advise loops (a.k.a. DDE Links). These have not been implemented as
+I did not know if it is possible to handle COM events from scripting languages
+such as VBScript.
+</p>
+<p>
+The component is implemented using <i>dual</i> interfaces, so also supports
+early binding. However, if you're using C++ you would be better off using the
+underlying NCL library/DDE classes directly.
+</p>
+
+<hr>
+
+<a name="DDEClient"></a>
+<h5>The DDE Client Class</h5>
+
+<p>
+The DDE Client class is essentially a Singleton style class that provides
+simple access to DDE servers. If all you need to do is query for a few values
+from a DDE source or two you can do it with repeated calls to
+<i>RequestTextItem</i>. It also provides access to the Wildcard style request
+[XTYP_WILDCONNECT] so that you can query for running servers and their topics.
+</p> 
+
+<h6>String[] RunningServers()</h6>
+<p>
+Finds out which DDE servers are currently running and returns a collection of
+the server names. The collection is an array of strings.
+</p>
+
+<h6>String[] GetServerTopics(String strService)</h6>
+<p>
+Finds out what topics are supported by a DDE server. The return value is an
+array of strings which are the topic names.
+</p>
+
+<h6>IDDEConversation OpenConversation(String strService, String strTopic)</h6>
+<p>
+Open a DDE conversation for a specific Server and Topic.<br/>
+See the DDE Conversation class for other ways to open a conversation.
+</p>
+
+<h6>IDDEConversations Conversations()</h6>
+<p>
+Get the collection of open DDE conversations. This collection is enumerable
+using the "For Each" idiom or can be indexed directly using the <i>Item</i>
+method<br/>
+NB: The Item method follows the VBScript and WMI convention of being 0-based.
+</p>
+
+<h6>String RequestTextItem(BSTR strService, BSTR strTopic, BSTR strItem)</h6>
+<p>
+Request the current value for a single item from a named service and topic. The
+item is requested in CF_TEXT (i.e. ANSI) format and then converted to UNICODE
+to pass back via COM as a string.
+</p>
+
+<a name="DDEConversation"></a>
+<h5>The DDE Conversation Class</h5>
+
+<p>
+The DDE Conversation class is really an optimisation (and an excuse for me to
+implement a COM collection :-) that avoids the overhead of creating a conversation
+every time an item is requested. If you have many values to request from a
+single Service|Topic pair, open an explicit conversation either from the DDE
+Clients' <i>OpenConversation</i> method, or use the "ddelink:" moniker
+namespace, then use that to request the items.
+</p> 
+
+<h6>Property: String Service</h6>
+<p>
+This property is the DDE service name. It can be read at any time, but only
+modified when the conversation is not open.
+</p>
+
+<h6>Property: String Topic</h6>
+<p>
+This property is the DDE topic name. It can be read at any time, but only
+modified when the conversation is not open.
+</p>
+
+<h6>Open()</h6>
+<p>
+Opens the conversation specified by the Service and Topic properties. If the
+conversation is already open, an error is returned.<br/>
+This method allows a DDE conversation to be opened by creating an explicit
+DDE Conversation object, setting the Service and Topic names and then calling
+Open().
+</p>
+
+<h6>Boolean IsOpen()</h6>
+<p>
+Checks if the conversation is currently open. Returns True or False.
+</p>
+
+<h6>Close()</h6>
+<p>
+Closes the DDE conversation. If the conversation is not open then the operation
+has no effect.
+</p>
+
+<h6>String RequestTextItem(String strItem)</h6>
+<p>
+Request the current value for a single item. The item is requested in CF_TEXT
+(i.e. ANSI) format and then converted to UNICODE to pass back via COM as a
+string.
+</p>
+
+<a name="Moniker"></a>
+<h5>The DDE Conversation Moniker Namespace</h5>
+
+<p>
+WMI uses a moniker namespace of "winmgmts" to support simpler creation of WMI
+queries by encoding the query as a moniker item, which in VBScript you pass
+to GetObject(). You can achieve a similar effect with DDE Conversations by
+using the "ddelink" namespace. The full moniker consists of the "ddelink:"
+prefix, a "//" separator and the moniker item is the Service and Topic name
+in DDE Link format, e.g.
+</p><p>
+ddelink://<b>SERVICE</b>|<b>TOPIC</b>
+</p><p>
+This helpfully gives the link a URL like syntax, and when support for true
+links are added the syntax can be updated to allow a "!Item" style suffix.
+</p>
+
+<a name="Errors"></a>
+<h5>Errors</h5>
+
+<p>
+All the COM objects support IErrorInfo, so you will receive textual error
+messages along with the result code. If the underlying error comes from DDE
+itself, then the symbolic name for the error code will be included (e.g.
+DMLERR_BUSY) which you can look up in the DDE SDK.
+</p>
+
+<hr>
+
+<a name="Examples"></a>
+<h5>Examples</h5>
+
+<p>
+The following set of examples should cover the most common scenarios. They are
+written in VBScript as scripting was the reason I created the components. The
+initial example shows how to create the DDE Client, which is then assumed in
+the subsequent code snippets.
+</p> 
+
+<h6>Creating the DDE Client</h6>
+<pre>
+Dim oDDEClient
+Set oDDEClient = CreateObject("DDECOMClient.DDEClient")
+</pre>
+
+<h6>Listing the Running Servers and Topics</h6>
+<pre>
+Dim astrServers, astrTopics
+Dim i, j
+
+astrServers = oDDEClient.RunningServers()
+
+For i = LBound(astrServers) To UBound(astrServers)
+
+    WScript.Echo "Server: " & astrServers(i)
+
+    astrTopics = oDDEClient.GetServerTopics(astrServers(i))
+
+    For j = LBound(astrTopics) To UBound(astrTopics)
+
+        WScript.Echo "    Topic: " & astrTopics(j)
+
+    Next
+
+Next
+</pre>
+
+<h6>Requesting a Single Item</h6>
+<pre>
+Dim strValue
+strValue = oDDEClient.RequestTextItem("PROGMAN", "PROGMAN", "Accessories")
+</pre>
+
+<h6>Opening a Conversation</h6>
+<pre>
+Dim oDDEConv
+Set oDDEConv = oDDEClient.OpenConversation("PROGMAN", "PROGMAN")
+</pre>
+<p><i>or</i></p>
+<pre>
+Dim oDDEConv
+Set oDDEConv = GetObject("ddelink://PROGMAN|PROGMAN")
+</pre>
+<p><i>or</i></p>
+<pre>
+Dim oDDEConv
+Set oDDEConv = CreateObject("DDECOMClient.DDEConversation")
+
+With oDDEConv
+    .Service = "PROGMAN"
+    .Topic   = "PROGMAN"
+End With
+</pre>
+
+<h6>Requesting Items From One Conversation</h6>
+<pre>
+Dim oDDEConv
+Set oDDEConv = GetObject("ddelink://PROGMAN|PROGMAN")
+
+Dim strValue1, strValue2, strValue3
+strValue1 = oDDEClient.RequestTextItem("Accessories")
+strValue2 = oDDEClient.RequestTextItem("Games")
+strValue3 = oDDEClient.RequestTextItem("Startup")
+</pre>
 
 <hr>
 
@@ -45,7 +273,7 @@ Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
 Web: <a href="http://www.cix.co.uk/~gort">www.cix.co.uk/~gort</a><br>
 </p><p>
 Chris Oldwood<br>
-13th July 2007<br>
+19th July 2007<br>
 </p>
 
 </body>
