@@ -4,6 +4,10 @@
 	Version="7.10"
 	Name="DDECOMClient"
 	ProjectGUID="{0788BF9F-7550-404F-AAF4-A7F6C98F2983}"
+	SccProjectName="SAK"
+	SccAuxPath="SAK"
+	SccLocalPath="SAK"
+	SccProvider="SAK"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -197,6 +201,9 @@
 				RelativePath=".\DDECOMClient.rc">
 			</File>
 			<File
+				RelativePath=".\DDECOMClient.tlb">
+			</File>
+			<File
 				RelativePath=".\Module.rcv">
 			</File>
 		</Filter>
@@ -207,9 +214,6 @@
 				RelativePath=".\HelpFile\DDECOMClient.html">
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\DDECOMClient.tlb">
-		</File>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
