@@ -19,7 +19,7 @@ Delete the files DDECOMClient.*.
 3: Help/Manual
 --------------
 
-There is a HelpFile - DDECOMClient.mht.
+There is a HelpFile - DDECOMClient.html.
 
 
 4: Contact Details
@@ -31,4 +31,4 @@ Web:   http://www.cix.co.uk/~gort
 
 Chris Oldwood 
 
-13th July 2007
+19th July 2007
