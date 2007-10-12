@@ -14,8 +14,6 @@ void TestDDEClient()
 {
 	try
 	{
-		USES_CONVERSION;
-
 		typedef WCL::ComPtr<DDECOMClientLib::IDDEClient> IDDEClientPtr;
 		typedef Core::IFacePtr<DDECOMClientLib::IDDEConversation> IDDEConversationPtr;
 		typedef WCL::SafeVector<VARIANT> VariantArray;
