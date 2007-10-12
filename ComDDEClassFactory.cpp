@@ -171,8 +171,6 @@ HRESULT COMCALL ComDDEClassFactory::GetObject(LPOLESTR pszItem, DWORD /*dwSpeedN
 		// Type shorthands.
 		typedef Core::IFacePtr<IDDEConversation> IDDEConversationPtr;
 
-		USES_CONVERSION;
-
 		// Check output parameters.
 		if (ppObject == nullptr)
 			throw WCL::ComException(E_POINTER, "ppObject is NULL");
@@ -189,7 +187,7 @@ HRESULT COMCALL ComDDEClassFactory::GetObject(LPOLESTR pszItem, DWORD /*dwSpeedN
 		std::tstring strItem;
 
 		// Split the item into "SERVICE|TOPIC!ITEM".
-		std::tstring strLink(OLE2T(pszItem));
+		std::tstring strLink = W2T(pszItem);
 		CStrTok      oStrTok(strLink.c_str(), TXT("|!"));
 
 		// Extract the Service name.

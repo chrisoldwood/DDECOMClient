@@ -46,8 +46,6 @@ HRESULT COMCALL ComDDEClient::RunningServers(SAFEARRAY** ppServers)
 		// Type shorthands.
 		typedef WCL::SafeVector<VARIANT> VariantArray;
 
-		USES_CONVERSION;
-
 		// Check output parameters.
 		if (ppServers == nullptr)
 			throw WCL::ComException(E_POINTER, "ppServers is NULL");
@@ -71,7 +69,7 @@ HRESULT COMCALL ComDDEClient::RunningServers(SAFEARRAY** ppServers)
 			::VariantInit(itServer);
 
 			V_VT  (itServer) = VT_BSTR;
-			V_BSTR(itServer) = ::SysAllocString(T2OLE(astrServers[i]));
+			V_BSTR(itServer) = ::SysAllocString(T2W(astrServers[i]));
 		}
 
 		// Return value.
@@ -96,8 +94,6 @@ HRESULT COMCALL ComDDEClient::GetServerTopics(BSTR bstrService, SAFEARRAY** ppTo
 		// Type shorthands.
 		typedef WCL::SafeVector<VARIANT> VariantArray;
 
-		USES_CONVERSION;
-
 		// Check output parameters.
 		if (ppTopics == nullptr)
 			throw WCL::ComException(E_POINTER, "ppTopics is NULL");
@@ -109,7 +105,7 @@ HRESULT COMCALL ComDDEClient::GetServerTopics(BSTR bstrService, SAFEARRAY** ppTo
 		if (bstrService == nullptr)
 			throw WCL::ComException(E_INVALIDARG, "bstrService is NULL");
 
-		std::tstring strService = OLE2T(bstrService);
+		std::tstring strService = W2T(bstrService);
 
 		CStrArray astrTopics;
 
@@ -127,7 +123,7 @@ HRESULT COMCALL ComDDEClient::GetServerTopics(BSTR bstrService, SAFEARRAY** ppTo
 			::VariantInit(itTopic);
 
 			V_VT  (itTopic) = VT_BSTR;
-			V_BSTR(itTopic) = ::SysAllocString(T2OLE(astrTopics[i]));
+			V_BSTR(itTopic) = ::SysAllocString(T2W(astrTopics[i]));
 		}
 
 		// Return value.
@@ -152,8 +148,6 @@ HRESULT COMCALL ComDDEClient::OpenConversation(BSTR bstrService, BSTR bstrTopic,
 		// Type shorthands.
 		typedef Core::IFacePtr<IDDEConversation> IDDEConversationPtr;
 
-		USES_CONVERSION;
-
 		// Check output parameters.
 		if (ppIDDEConv == nullptr)
 			throw WCL::ComException(E_POINTER, "ppIDDEConv is NULL");
@@ -166,8 +160,8 @@ HRESULT COMCALL ComDDEClient::OpenConversation(BSTR bstrService, BSTR bstrTopic,
 			throw WCL::ComException(E_INVALIDARG, "bstrService/bstrTopic is NULL");
 
 		// Create the conversation.
-		std::tstring strService = OLE2T(bstrService);
-		std::tstring strTopic   = OLE2T(bstrTopic);
+		std::tstring strService = W2T(bstrService);
+		std::tstring strTopic   = W2T(bstrTopic);
 
 		DDE::CltConvPtr     pConv    = DDE::CltConvPtr(m_pDDEClient->CreateConversation(strService.c_str(), strTopic.c_str()));
 		IDDEConversationPtr pComConv = IDDEConversationPtr(new ComDDEConversation(pConv), true);
@@ -234,8 +228,6 @@ HRESULT COMCALL ComDDEClient::RequestTextItem(BSTR bstrService, BSTR bstrTopic, 
 
 	try
 	{
-		USES_CONVERSION;
-
 		// Check output parameters.
 		if (pbstrValue == nullptr)
 			throw WCL::ComException(E_POINTER, "pbstrValue is NULL");
@@ -248,17 +240,17 @@ HRESULT COMCALL ComDDEClient::RequestTextItem(BSTR bstrService, BSTR bstrTopic, 
 			throw WCL::ComException(E_INVALIDARG, "bstrService/bstrTopic/bstrItem is NULL");
 
 		// Create the conversation.
-		std::tstring strService = OLE2T(bstrService);
-		std::tstring strTopic   = OLE2T(bstrTopic);
+		std::tstring strService = W2T(bstrService);
+		std::tstring strTopic   = W2T(bstrTopic);
 
 		DDE::CltConvPtr pConv(m_pDDEClient->CreateConversation(strService.c_str(), strTopic.c_str()));
 
 		// Request the item value (CF_ANSI).
-		std::tstring strItem  = OLE2T(bstrItem);
+		std::tstring strItem  = W2T(bstrItem);
 		std::tstring strValue = pConv->Request(strItem.c_str());
 
 		// Return value.
-		*pbstrValue = ::SysAllocString(T2OLE(strValue.c_str()));
+		*pbstrValue = ::SysAllocString(T2W(strValue.c_str()));
 
 		hr = S_OK;
 	}

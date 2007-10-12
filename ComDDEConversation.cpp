@@ -61,8 +61,6 @@ HRESULT COMCALL ComDDEConversation::put_Service(BSTR bstrService)
 
 	try
 	{
-		USES_CONVERSION;
-
 		// Currently open?
 		if (m_pConv.Get() != nullptr)
 			throw WCL::ComException(E_UNEXPECTED, "The conversation is open");
@@ -72,7 +70,7 @@ HRESULT COMCALL ComDDEConversation::put_Service(BSTR bstrService)
 			throw WCL::ComException(E_POINTER, "bstrService is NULL");
 
 		// Save service name.
-		m_strService = OLE2T(bstrService);
+		m_strService = W2T(bstrService);
 
 		hr = S_OK;
 	}
@@ -90,14 +88,12 @@ HRESULT COMCALL ComDDEConversation::get_Service(BSTR* pbstrService)
 
 	try
 	{
-		USES_CONVERSION;
-
 		// Validate parameters.
 		if (pbstrService == nullptr)
 			throw WCL::ComException(E_POINTER, "pbstrService is NULL");
 
 		// Return service name.
-		*pbstrService = ::SysAllocString(T2OLE(m_strService.c_str()));
+		*pbstrService = ::SysAllocString(T2W(m_strService.c_str()));
 
 		hr = S_OK;
 	}
@@ -115,8 +111,6 @@ HRESULT COMCALL ComDDEConversation::put_Topic(BSTR bstrTopic)
 
 	try
 	{
-		USES_CONVERSION;
-
 		// Currently open?
 		if (m_pConv.Get() != nullptr)
 			throw WCL::ComException(E_UNEXPECTED, "The conversation is open");
@@ -126,7 +120,7 @@ HRESULT COMCALL ComDDEConversation::put_Topic(BSTR bstrTopic)
 			throw WCL::ComException(E_POINTER, "bstrTopic is NULL");
 
 		// Save topic name.
-		m_strTopic = OLE2T(bstrTopic);
+		m_strTopic = W2T(bstrTopic);
 
 		hr = S_OK;
 	}
@@ -144,14 +138,12 @@ HRESULT COMCALL ComDDEConversation::get_Topic(BSTR* pbstrTopic)
 
 	try
 	{
-		USES_CONVERSION;
-
 		// Validate parameters.
 		if (pbstrTopic == nullptr)
 			throw WCL::ComException(E_POINTER, "pbstrTopic is NULL");
 
 		// Return topic name.
-		*pbstrTopic = ::SysAllocString(T2OLE(m_strTopic.c_str()));
+		*pbstrTopic = ::SysAllocString(T2W(m_strTopic.c_str()));
 
 		hr = S_OK;
 	}
@@ -234,8 +226,6 @@ HRESULT COMCALL ComDDEConversation::RequestTextItem(BSTR bstrItem, BSTR* pbstrVa
 
 	try
 	{
-		USES_CONVERSION;
-
 		// Check output parameters.
 		if (pbstrValue == nullptr)
 			throw WCL::ComException(E_POINTER, "pbstrValue is NULL");
@@ -252,11 +242,11 @@ HRESULT COMCALL ComDDEConversation::RequestTextItem(BSTR bstrItem, BSTR* pbstrVa
 			throw WCL::ComException(E_UNEXPECTED, "The conversation is not open");
 
 		// Request the item value (CF_ANSI).
-		std::tstring strItem  = OLE2T(bstrItem);
+		std::tstring strItem  = W2T(bstrItem);
 		std::tstring strValue = m_pConv->Request(strItem.c_str());
 
 		// Return value.
-		*pbstrValue = ::SysAllocString(T2OLE(strValue.c_str()));
+		*pbstrValue = ::SysAllocString(T2W(strValue.c_str()));
 
 		hr = S_OK;
 	}
