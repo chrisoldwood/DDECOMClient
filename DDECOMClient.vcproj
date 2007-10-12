@@ -27,12 +27,17 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;DDECOMCLIENT_EXPORTS"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="TRUE"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="FALSE"
+				ForceConformanceInForLoopScope="TRUE"
+				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="DDECOMClient.hpp"
 				WarningLevel="4"
 				WarnAsError="TRUE"
-				DebugInformationFormat="4"/>
+				DebugInformationFormat="3"
+				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -77,14 +82,20 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				InlineFunctionExpansion="0"
 				AdditionalIncludeDirectories="../Lib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;DDECOMCLIENT_EXPORTS"
+				StringPooling="TRUE"
 				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="FALSE"
+				ForceConformanceInForLoopScope="TRUE"
+				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="DDECOMClient.hpp"
 				WarningLevel="4"
 				WarnAsError="TRUE"
-				DebugInformationFormat="3"/>
+				DebugInformationFormat="3"
+				CompileAs="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -124,6 +135,21 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{A5573046-6334-4DDA-94B5-EA329D0B4124}"
+			Name="COM"/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{790BC113-52FB-4565-8968-79B8B011C520}"
+			Name="Core"/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{AED77F84-49CF-4B84-B319-2D07025ECA06}"
+			Name="Legacy"/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}"
+			Name="NCL"/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{9B0335B6-93BE-4604-8497-27431874D758}"
+			Name="Wcl"/>
 	</References>
 	<Files>
 		<Filter
@@ -187,9 +213,6 @@
 				RelativePath=".\Interfaces_h.h">
 			</File>
 			<File
-				RelativePath=".\resource.h">
-			</File>
-			<File
 				RelativePath=".\TypeLibrary_h.h">
 			</File>
 		</Filter>
@@ -204,7 +227,10 @@
 				RelativePath=".\DDECOMClient.tlb">
 			</File>
 			<File
-				RelativePath=".\Module.rcv">
+				RelativePath=".\Dll.rcv">
+			</File>
+			<File
+				RelativePath=".\resource.h">
 			</File>
 		</Filter>
 		<Filter
