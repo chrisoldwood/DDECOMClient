@@ -112,6 +112,15 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{790BC113-52FB-4565-8968-79B8B011C520}"
+			Name="Core"/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{0788BF9F-7550-404F-AAF4-A7F6C98F2983}"
+			Name="DDECOMClient"/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{9B0335B6-93BE-4604-8497-27431874D758}"
+			Name="Wcl"/>
 	</References>
 	<Files>
 		<Filter
