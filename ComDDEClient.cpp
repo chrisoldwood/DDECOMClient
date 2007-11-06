@@ -3,7 +3,7 @@
 //! \brief  The ComDDEClient class definition.
 //! \author Chris Oldwood
 
-#include "DDECOMClient.hpp"
+#include "Common.hpp"
 #include "ComDDEClient.hpp"
 #include <NCL/DDECltConv.hpp>
 #include <NCL/DDECltConvPtr.hpp>
@@ -12,11 +12,6 @@
 #include "ComDDEConversations.hpp"
 #include <WCL/SafeVector.hpp>
 #include <WCL/StrArray.hpp>
-
-#ifdef _DEBUG
-// For memory leak detection.
-#define new DBGCRT_NEW
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Default constructor.

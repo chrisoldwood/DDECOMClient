@@ -3,15 +3,10 @@
 //! \brief  The ComDDEConversations class definition.
 //! \author Chris Oldwood
 
-#include "DDECOMClient.hpp"
+#include "Common.hpp"
 #include "ComDDEConversations.hpp"
 #include "ComDDEConversation.hpp"
 #include "ComDDEConvEnum.hpp"
-
-#ifdef _DEBUG
-// For memory leak detection.
-#define new DBGCRT_NEW
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Default constructor.

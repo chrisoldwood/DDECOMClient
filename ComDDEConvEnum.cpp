@@ -3,14 +3,9 @@
 //! \brief  The ComDDEConvEnum class definition.
 //! \author Chris Oldwood
 
-#include "DDECOMClient.hpp"
+#include "Common.hpp"
 #include "ComDDEConvEnum.hpp"
 #include "ComDDEConversation.hpp"
-
-#ifdef _DEBUG
-// For memory leak detection.
-#define new DBGCRT_NEW
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Default constructor.

@@ -3,13 +3,8 @@
 //! \brief  The ComServer class definition.
 //! \author Chris Oldwood
 
-#include "DDECOMClient.hpp"
+#include "Common.hpp"
 #include "ComServer.hpp"
-
-#ifdef _DEBUG
-// For memory leak detection.
-#define new DBGCRT_NEW
-#endif
 
 //! The component object.
 ComServer g_oDll;

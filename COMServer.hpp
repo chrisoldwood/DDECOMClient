@@ -7,6 +7,10 @@
 #ifndef COMSERVER_HPP
 #define COMSERVER_HPP
 
+#if _MSC_VER > 1000
+#pragma once
+#endif
+
 #include <COM/InprocServer.hpp>
 #include <COM/ServerRegInfo.hpp>
 #include "TypeLibrary_h.h"

@@ -3,7 +3,7 @@
 //! \brief  The ComDDEClassFactory class definition.
 //! \author Chris Oldwood
 
-#include "DDECOMClient.hpp"
+#include "Common.hpp"
 #include "ComDDEClassFactory.hpp"
 #include "TypeLibrary_h.h"
 #include <COM/RegUtils.hpp>
@@ -11,11 +11,6 @@
 #include "ComDDEClient.hpp"
 #include <NCL/DDECltConvPtr.hpp>
 #include "ComDDEConversation.hpp"
-
-#ifdef _DEBUG
-// For memory leak detection.
-#define new DBGCRT_NEW
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // Contants.

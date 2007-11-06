@@ -3,16 +3,11 @@
 //! \brief  The ComDDEConversation class definition.
 //! \author Chris Oldwood
 
-#include "DDECOMClient.hpp"
+#include "Common.hpp"
 #include "ComDDEConversation.hpp"
 #include <NCL/DDEException.hpp>
 #include <NCL/DDEClient.hpp>
 #include <WCL/VariantBool.hpp>
-
-#ifdef _DEBUG
-// For memory leak detection.
-#define new DBGCRT_NEW
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Default constructor.
