@@ -7,8 +7,8 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include <afxres.h>
-#include <WCL/WclRsc.h>
+#include <WCL/CommonRsc.h>
+
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -34,13 +34,14 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include <afxres.h>\r\n"
-    "#include <WCL/WclRsc.h>\0"
+    "#include <WCL/CommonRsc.h>\r\n"
+    "\0"
 END
 
 3 TEXTINCLUDE 
 BEGIN
-    "#include ""Dll.rcv""\0"
+    "#include ""Dll.rcv""\r\n"
+    "\0"
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -75,6 +76,7 @@ IDR_TYPELIB             TYPELIB                 "DDECOMClient.tlb"
 // Generated from the TEXTINCLUDE 3 resource.
 //
 #include "Dll.rcv"
+
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 
