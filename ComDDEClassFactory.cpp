@@ -85,11 +85,11 @@ HRESULT COMCALL ComDDEClassFactory::ParseDisplayName(IBindCtx* pBindCtx, LPOLEST
 		size_t nLength = wcslen(pszDisplayName);
 
 		// Namespace must be "ddeconv:"
-		if (wcsnicmp(pszDisplayName, g_pszNamespace, g_nNamespaceLen) != 0)
+		if (_wcsnicmp(pszDisplayName, g_pszNamespace, g_nNamespaceLen) != 0)
 			throw WCL::ComException(MK_E_NOOBJECT, "Namespace must be 'ddeconv:'");
 
 		// Delim must be "//"
-		if (wcsnicmp(pszDisplayName+g_nNamespaceLen, g_pszDelim, g_nDelimLen) != 0)
+		if (_wcsnicmp(pszDisplayName+g_nNamespaceLen, g_pszDelim, g_nDelimLen) != 0)
 			throw WCL::ComException(MK_E_NOOBJECT, "Namespace separator must be '//'");
 
 		IMonikerPtr pClassMoniker;

@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include <tchar.h>
 #include <iomanip>
 #include <WCL/AutoCom.hpp>
 #include <WCL/ComPtr.hpp>
