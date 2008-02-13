@@ -43,7 +43,7 @@ HRESULT COMCALL ComDDEClient::RunningServers(SAFEARRAY** ppServers)
 
 		// Check output parameters.
 		if (ppServers == nullptr)
-			throw WCL::ComException(E_POINTER, "ppServers is NULL");
+			throw WCL::ComException(E_POINTER, TXT("ppServers is NULL"));
 
 		// Reset output parameters.
 		*ppServers = nullptr;
@@ -57,7 +57,7 @@ HRESULT COMCALL ComDDEClient::RunningServers(SAFEARRAY** ppServers)
 		VariantArray::iterator itServer = avtServers.begin();
 
 		// Create the return array.
-		for (int i = 0; i < astrServers.Size(); ++i, ++itServer)
+		for (size_t i = 0; i < astrServers.Size(); ++i, ++itServer)
 		{
 			ASSERT(itServer != avtServers.end());
 
@@ -91,14 +91,14 @@ HRESULT COMCALL ComDDEClient::GetServerTopics(BSTR bstrService, SAFEARRAY** ppTo
 
 		// Check output parameters.
 		if (ppTopics == nullptr)
-			throw WCL::ComException(E_POINTER, "ppTopics is NULL");
+			throw WCL::ComException(E_POINTER, TXT("ppTopics is NULL"));
 
 		// Reset output parameters.
 		*ppTopics = nullptr;
 
 		// Validate input parameters.
 		if (bstrService == nullptr)
-			throw WCL::ComException(E_INVALIDARG, "bstrService is NULL");
+			throw WCL::ComException(E_INVALIDARG, TXT("bstrService is NULL"));
 
 		std::tstring strService = W2T(bstrService);
 
@@ -111,7 +111,7 @@ HRESULT COMCALL ComDDEClient::GetServerTopics(BSTR bstrService, SAFEARRAY** ppTo
 		VariantArray::iterator itTopic = avtTopics.begin();
 
 		// Create the return array.
-		for (int i = 0; i < astrTopics.Size(); ++i, ++itTopic)
+		for (size_t i = 0; i < astrTopics.Size(); ++i, ++itTopic)
 		{
 			ASSERT(itTopic != avtTopics.end());
 
@@ -145,14 +145,14 @@ HRESULT COMCALL ComDDEClient::OpenConversation(BSTR bstrService, BSTR bstrTopic,
 
 		// Check output parameters.
 		if (ppIDDEConv == nullptr)
-			throw WCL::ComException(E_POINTER, "ppIDDEConv is NULL");
+			throw WCL::ComException(E_POINTER, TXT("ppIDDEConv is NULL"));
 
 		// Reset output parameters.
 		*ppIDDEConv = nullptr;
 
 		// Validate input parameters.
 		if ( (bstrService == nullptr) || (bstrTopic == nullptr) )
-			throw WCL::ComException(E_INVALIDARG, "bstrService/bstrTopic is NULL");
+			throw WCL::ComException(E_INVALIDARG, TXT("bstrService/bstrTopic is NULL"));
 
 		// Create the conversation.
 		std::tstring strService = W2T(bstrService);
@@ -185,7 +185,7 @@ HRESULT COMCALL ComDDEClient::Conversations(IDDEConversations** ppIDDEConvs)
 
 		// Check output parameters.
 		if (ppIDDEConvs == nullptr)
-			throw WCL::ComException(E_POINTER, "ppIDDEConvs is NULL");
+			throw WCL::ComException(E_POINTER, TXT("ppIDDEConvs is NULL"));
 
 		// Reset output parameters.
 		*ppIDDEConvs = nullptr;
@@ -225,14 +225,14 @@ HRESULT COMCALL ComDDEClient::RequestTextItem(BSTR bstrService, BSTR bstrTopic, 
 	{
 		// Check output parameters.
 		if (pbstrValue == nullptr)
-			throw WCL::ComException(E_POINTER, "pbstrValue is NULL");
+			throw WCL::ComException(E_POINTER, TXT("pbstrValue is NULL"));
 
 		// Reset output parameters.
 		*pbstrValue = nullptr;
 
 		// Validate input parameters.
 		if ( (bstrService == nullptr) || (bstrTopic == nullptr) || (bstrItem == nullptr) )
-			throw WCL::ComException(E_INVALIDARG, "bstrService/bstrTopic/bstrItem is NULL");
+			throw WCL::ComException(E_INVALIDARG, TXT("bstrService/bstrTopic/bstrItem is NULL"));
 
 		// Create the conversation.
 		std::tstring strService = W2T(bstrService);
@@ -242,7 +242,7 @@ HRESULT COMCALL ComDDEClient::RequestTextItem(BSTR bstrService, BSTR bstrTopic, 
 
 		// Request the item value (CF_ANSI).
 		std::tstring strItem  = W2T(bstrItem);
-		std::tstring strValue = pConv->Request(strItem.c_str());
+		std::tstring strValue = pConv->RequestString(strItem.c_str(), CF_TEXT);
 
 		// Return value.
 		*pbstrValue = ::SysAllocString(T2W(strValue.c_str()));

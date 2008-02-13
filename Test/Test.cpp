@@ -27,11 +27,11 @@ void TestDDEClient()
 		HRESULT hr = pDDEClient->RunningServers(&pServersArray);
 
 		if (FAILED(hr))
-			throw WCL::ComException(hr, pDDEClient, "");
+			throw WCL::ComException(hr, pDDEClient, TXT(""));
 
 		VariantArray avtServers(pServersArray);
 
-		std::cout << "Running Servers & Topics: " << avtServers.Size() << std::endl;
+		std::tcout << TXT("Running Servers & Topics: ") << avtServers.Size() << std::endl;
 
 		for (CIter itServer = avtServers.begin(); itServer != avtServers.end(); ++itServer)
 		{
@@ -42,7 +42,7 @@ void TestDDEClient()
 			HRESULT hr = pDDEClient->GetServerTopics(V_BSTR(itServer), &pTopicsArray);
 
 			if (FAILED(hr))
-				throw WCL::ComException(hr, pDDEClient, "");
+				throw WCL::ComException(hr, pDDEClient, TXT(""));
 
 			VariantArray avtTopics(pTopicsArray);
 
@@ -50,39 +50,39 @@ void TestDDEClient()
 				std::wcout << L"\t" << V_BSTR(itTopic) << std::endl;
 		}
 
-		std::cout << std::endl;
-		std::cout << TXT("Requesting item - PROGMAN|PROGMAN!Accessories") << std::endl;
+		std::tcout << std::endl;
+		std::tcout << TXT("Requesting item - PROGMAN|PROGMAN!Accessories") << std::endl;
 
-		WCL::ComStr bstrService(L"PROGMAN");
-		WCL::ComStr bstrTopic(L"PROGMAN");
-		WCL::ComStr bstrItem("Accessories");
+		WCL::ComStr bstrService(TXT("PROGMAN"));
+		WCL::ComStr bstrTopic(TXT("PROGMAN"));
+		WCL::ComStr bstrItem(TXT("Accessories"));
 		WCL::ComStr bstrValue;
 
 		hr = pDDEClient->RequestTextItem(bstrService.Get(), bstrTopic.Get(), bstrItem.Get(), AttachTo(bstrValue));
 
 		if (FAILED(hr))
-			throw WCL::ComException(hr, pDDEClient, "");
+			throw WCL::ComException(hr, pDDEClient, TXT(""));
 
 		std::wcout << bstrValue.Get() << std::endl;
-		std::cout  << std::endl;
-		std::cout  << TXT("Opening conversation - PROGMAN|PROGMAN") << std::endl;
+		std::tcout  << std::endl;
+		std::tcout  << TXT("Opening conversation - PROGMAN|PROGMAN") << std::endl;
 
 		IDDEConversationPtr pConv;
 
 		hr = pDDEClient->OpenConversation(bstrService.Get(), bstrTopic.Get(), AttachTo(pConv));
 
 		if (FAILED(hr))
-			throw WCL::ComException(hr, pDDEClient, "");
+			throw WCL::ComException(hr, pDDEClient, TXT(""));
 
-		std::cout << TXT("Requesting item - Accessories") << std::endl;
+		std::tcout << TXT("Requesting item - Accessories") << std::endl;
 
 		hr = pConv->RequestTextItem(bstrItem.Get(), AttachTo(bstrValue));
 
 		if (FAILED(hr))
-			throw WCL::ComException(hr, pDDEClient, "");
+			throw WCL::ComException(hr, pDDEClient, TXT(""));
 
 		std::wcout << bstrValue.Get() << std::endl;
-		std::cout  << std::endl;
+		std::tcout << std::endl;
 	}
 	catch (const std::exception& e)
 	{

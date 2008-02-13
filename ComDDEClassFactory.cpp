@@ -70,7 +70,7 @@ HRESULT COMCALL ComDDEClassFactory::ParseDisplayName(IBindCtx* pBindCtx, LPOLEST
 
 		// Check output parameters.
 		if ( (pcEaten == nullptr) || (ppMoniker == nullptr) )
-			throw WCL::ComException(E_POINTER, "pcEaten/ppMoniker is NULL");
+			throw WCL::ComException(E_POINTER, TXT("pcEaten/ppMoniker is NULL"));
 
 		// Reset output parameters.
 		*pcEaten   = 0;
@@ -78,19 +78,19 @@ HRESULT COMCALL ComDDEClassFactory::ParseDisplayName(IBindCtx* pBindCtx, LPOLEST
 
 		// Validate input parameters.
 		if ( (pBindCtx == nullptr) || (pszDisplayName == nullptr) )
-			throw WCL::ComException(E_INVALIDARG, "pBindCtx/pszDisplayName is NULL");
+			throw WCL::ComException(E_INVALIDARG, TXT("pBindCtx/pszDisplayName is NULL"));
 
-//		TRACE1("%ls\n", pszDisplayName);
+//		TRACE1(TXT("%ls\n"), pszDisplayName);
 
 		size_t nLength = wcslen(pszDisplayName);
 
 		// Namespace must be "ddeconv:"
 		if (_wcsnicmp(pszDisplayName, g_pszNamespace, g_nNamespaceLen) != 0)
-			throw WCL::ComException(MK_E_NOOBJECT, "Namespace must be 'ddeconv:'");
+			throw WCL::ComException(MK_E_NOOBJECT, TXT("Namespace must be 'ddeconv:'"));
 
 		// Delim must be "//"
 		if (_wcsnicmp(pszDisplayName+g_nNamespaceLen, g_pszDelim, g_nDelimLen) != 0)
-			throw WCL::ComException(MK_E_NOOBJECT, "Namespace separator must be '//'");
+			throw WCL::ComException(MK_E_NOOBJECT, TXT("Namespace separator must be '//'"));
 
 		IMonikerPtr pClassMoniker;
 
@@ -98,7 +98,7 @@ HRESULT COMCALL ComDDEClassFactory::ParseDisplayName(IBindCtx* pBindCtx, LPOLEST
 		hr = ::CreateClassMoniker(CLSID_DDEConversation, AttachTo(pClassMoniker));
 
 		if (FAILED(hr))
-			throw WCL::ComException(hr, "Failed to create the DDEConversation class moniker");
+			throw WCL::ComException(hr, TXT("Failed to create the DDEConversation class moniker"));
 
 		// Skip to the conversation name.
 		LPOLESTR pszItemName = pszDisplayName + g_nNamespaceLen + g_nDelimLen;
@@ -109,7 +109,7 @@ HRESULT COMCALL ComDDEClassFactory::ParseDisplayName(IBindCtx* pBindCtx, LPOLEST
 		hr = ::CreateItemMoniker(g_pszDelim, pszItemName, AttachTo(pItemMoniker));
 
 		if (FAILED(hr))
-			throw WCL::ComException(hr, "Failed to create the DDE conversation item moniker");
+			throw WCL::ComException(hr, TXT("Failed to create the DDE conversation item moniker"));
 
 		IMonikerPtr pCompositeMoniker;
 
@@ -117,7 +117,7 @@ HRESULT COMCALL ComDDEClassFactory::ParseDisplayName(IBindCtx* pBindCtx, LPOLEST
 		hr = ::CreateGenericComposite(pClassMoniker.Get(), pItemMoniker.Get(), AttachTo(pCompositeMoniker));
 
 		if (FAILED(hr))
-			throw WCL::ComException(hr, "Failed to create the DDE conversation composite moniker");
+			throw WCL::ComException(hr, TXT("Failed to create the DDE conversation composite moniker"));
 
 		// Write output values.
 		*pcEaten   = nLength;
@@ -168,14 +168,14 @@ HRESULT COMCALL ComDDEClassFactory::GetObject(LPOLESTR pszItem, DWORD /*dwSpeedN
 
 		// Check output parameters.
 		if (ppObject == nullptr)
-			throw WCL::ComException(E_POINTER, "ppObject is NULL");
+			throw WCL::ComException(E_POINTER, TXT("ppObject is NULL"));
 
 		// Reset output parameters.
 		*ppObject = nullptr;
 
 		// Validate input parameters.
 		if (pszItem == nullptr)
-			throw WCL::ComException(E_INVALIDARG, "pszItem is NULL");
+			throw WCL::ComException(E_INVALIDARG, TXT("pszItem is NULL"));
 
 		std::tstring strService;
 		std::tstring strTopic;
@@ -199,7 +199,7 @@ HRESULT COMCALL ComDDEClassFactory::GetObject(LPOLESTR pszItem, DWORD /*dwSpeedN
 
 		// Must have at least a Service and Topic.
 		if (strService.empty() || strTopic.empty())
-			throw WCL::ComException(MK_E_SYNTAX, "The DDE link syntax is invalid");
+			throw WCL::ComException(MK_E_SYNTAX, TXT("The DDE link syntax is invalid"));
 
 		// Create a Conversation.
 		CDDEClient*         pDDEClient = ComDDEClient::DDEClient();

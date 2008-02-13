@@ -50,7 +50,7 @@ HRESULT COMCALL ComDDEConvEnum::Next(ULONG nCount, VARIANT* avItems, ULONG* plFe
 
 		// Validate parameters.
 		if (avItems == nullptr)
-			throw WCL::ComException(E_POINTER, "avItems is NULL");
+			throw WCL::ComException(E_POINTER, TXT("avItems is NULL"));
 
 		// Reset output parameters.
 		for (size_t i = 0; i < nCount; ++i)
@@ -141,7 +141,7 @@ HRESULT COMCALL ComDDEConvEnum::Clone(IEnumVARIANT** ppEnum)
 
 		// Validate parameters.
 		if (ppEnum == nullptr)
-			throw WCL::ComException(E_POINTER, "ppEnum is NULL");
+			throw WCL::ComException(E_POINTER, TXT("ppEnum is NULL"));
 
 		// Reset output parameters.
 		*ppEnum = nullptr;

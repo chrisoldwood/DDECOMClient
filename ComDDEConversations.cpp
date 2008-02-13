@@ -36,7 +36,7 @@ HRESULT COMCALL ComDDEConversations::get_Count(long* plCount)
 	{
 		// Validate parameters.
 		if (plCount == nullptr)
-			throw WCL::ComException(E_POINTER, "plCount is NULL");
+			throw WCL::ComException(E_POINTER, TXT("plCount is NULL"));
 
 		// Return the count.
 		*plCount = m_vDDEConvs.size();
@@ -62,7 +62,7 @@ HRESULT COMCALL ComDDEConversations::get__NewEnum(IUnknown** ppEnum)
 
 		// Validate parameters.
 		if (ppEnum == nullptr)
-			throw WCL::ComException(E_POINTER, "ppEnum is NULL");
+			throw WCL::ComException(E_POINTER, TXT("ppEnum is NULL"));
 
 		// Reset output parameters.
 		*ppEnum = nullptr;
@@ -94,7 +94,7 @@ HRESULT COMCALL ComDDEConversations::get_Item(long nIndex, IDDEConversation** pp
 
 		// Validate parameters.
 		if (ppIDDEConv == nullptr)
-			throw WCL::ComException(E_POINTER, "ppIDDEConv is NULL");
+			throw WCL::ComException(E_POINTER, TXT("ppIDDEConv is NULL"));
 
 		// Reset output parameters.
 		*ppIDDEConv = nullptr;
@@ -104,7 +104,7 @@ HRESULT COMCALL ComDDEConversations::get_Item(long nIndex, IDDEConversation** pp
 	
 		// Validate input parameters.
 		if ( (nIndex < 0) || (nIndex >= nSize) )
-			throw WCL::ComException(E_INVALIDARG, "nIndex is out of range");
+			throw WCL::ComException(E_INVALIDARG, TXT("nIndex is out of range"));
 
 		IDDEConversationPtr pComConv = IDDEConversationPtr(new ComDDEConversation(m_vDDEConvs[nIndex]), true);
 

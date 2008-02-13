@@ -58,11 +58,11 @@ HRESULT COMCALL ComDDEConversation::put_Service(BSTR bstrService)
 	{
 		// Currently open?
 		if (m_pConv.Get() != nullptr)
-			throw WCL::ComException(E_UNEXPECTED, "The conversation is open");
+			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is open"));
 
 		// Validate parameters.
 		if (bstrService == nullptr)
-			throw WCL::ComException(E_POINTER, "bstrService is NULL");
+			throw WCL::ComException(E_POINTER, TXT("bstrService is NULL"));
 
 		// Save service name.
 		m_strService = W2T(bstrService);
@@ -85,7 +85,7 @@ HRESULT COMCALL ComDDEConversation::get_Service(BSTR* pbstrService)
 	{
 		// Validate parameters.
 		if (pbstrService == nullptr)
-			throw WCL::ComException(E_POINTER, "pbstrService is NULL");
+			throw WCL::ComException(E_POINTER, TXT("pbstrService is NULL"));
 
 		// Return service name.
 		*pbstrService = ::SysAllocString(T2W(m_strService.c_str()));
@@ -108,11 +108,11 @@ HRESULT COMCALL ComDDEConversation::put_Topic(BSTR bstrTopic)
 	{
 		// Currently open?
 		if (m_pConv.Get() != nullptr)
-			throw WCL::ComException(E_UNEXPECTED, "The conversation is open");
+			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is open"));
 
 		// Validate parameters.
 		if (bstrTopic == nullptr)
-			throw WCL::ComException(E_POINTER, "bstrTopic is NULL");
+			throw WCL::ComException(E_POINTER, TXT("bstrTopic is NULL"));
 
 		// Save topic name.
 		m_strTopic = W2T(bstrTopic);
@@ -135,7 +135,7 @@ HRESULT COMCALL ComDDEConversation::get_Topic(BSTR* pbstrTopic)
 	{
 		// Validate parameters.
 		if (pbstrTopic == nullptr)
-			throw WCL::ComException(E_POINTER, "pbstrTopic is NULL");
+			throw WCL::ComException(E_POINTER, TXT("pbstrTopic is NULL"));
 
 		// Return topic name.
 		*pbstrTopic = ::SysAllocString(T2W(m_strTopic.c_str()));
@@ -158,7 +158,7 @@ HRESULT COMCALL ComDDEConversation::Open()
 	{
 		// Already open?
 		if (m_pConv.Get() != nullptr)
-			throw WCL::ComException(E_UNEXPECTED, "The conversation is already open");
+			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is already open"));
 
 		// Open it.
 		m_pConv = DDE::CltConvPtr(CDDEClient::Instance()->CreateConversation(m_strService.c_str(), m_strTopic.c_str()));
@@ -181,7 +181,7 @@ HRESULT COMCALL ComDDEConversation::IsOpen(VARIANT_BOOL* pbIsOpen)
 	{
 		// Validate parameters.
 		if (pbIsOpen == nullptr)
-			throw WCL::ComException(E_POINTER, "pbIsOpen is NULL");
+			throw WCL::ComException(E_POINTER, TXT("pbIsOpen is NULL"));
 
 		// Return conversation status.
 		*pbIsOpen = ToVariantBool(m_pConv.Get() != nullptr);
@@ -223,22 +223,22 @@ HRESULT COMCALL ComDDEConversation::RequestTextItem(BSTR bstrItem, BSTR* pbstrVa
 	{
 		// Check output parameters.
 		if (pbstrValue == nullptr)
-			throw WCL::ComException(E_POINTER, "pbstrValue is NULL");
+			throw WCL::ComException(E_POINTER, TXT("pbstrValue is NULL"));
 
 		// Reset output parameters.
 		*pbstrValue = nullptr;
 
 		// Validate input parameters.
 		if (bstrItem == nullptr)
-			throw WCL::ComException(E_INVALIDARG, "bstrItem is NULL");
+			throw WCL::ComException(E_INVALIDARG, TXT("bstrItem is NULL"));
 
 		// Conversation not open?
 		if (m_pConv.Get() == nullptr)
-			throw WCL::ComException(E_UNEXPECTED, "The conversation is not open");
+			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is not open"));
 
 		// Request the item value (CF_ANSI).
 		std::tstring strItem  = W2T(bstrItem);
-		std::tstring strValue = m_pConv->Request(strItem.c_str());
+		std::tstring strValue = m_pConv->RequestString(strItem.c_str(), CF_TEXT);
 
 		// Return value.
 		*pbstrValue = ::SysAllocString(T2W(strValue.c_str()));
