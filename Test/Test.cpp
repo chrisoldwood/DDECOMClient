@@ -16,7 +16,7 @@ void TestDDEClient()
 	try
 	{
 		typedef WCL::ComPtr<DDECOMClientLib::IDDEClient> IDDEClientPtr;
-		typedef Core::IFacePtr<DDECOMClientLib::IDDEConversation> IDDEConversationPtr;
+		typedef WCL::IFacePtr<DDECOMClientLib::IDDEConversation> IDDEConversationPtr;
 		typedef WCL::SafeVector<VARIANT> VariantArray;
 		typedef VariantArray::const_iterator  CIter;
 
