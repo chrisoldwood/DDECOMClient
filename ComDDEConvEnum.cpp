@@ -46,7 +46,7 @@ HRESULT COMCALL ComDDEConvEnum::Next(ULONG nCount, VARIANT* avItems, ULONG* plFe
 	try
 	{
 		// Type shorthands.
-		typedef Core::IFacePtr<IDDEConversation> IDDEConversationPtr;
+		typedef WCL::IFacePtr<IDDEConversation> IDDEConversationPtr;
 
 		// Validate parameters.
 		if (avItems == nullptr)
@@ -137,7 +137,7 @@ HRESULT COMCALL ComDDEConvEnum::Clone(IEnumVARIANT** ppEnum)
 	try
 	{
 		// Type shorthands.
-		typedef Core::IFacePtr<IEnumVARIANT> IEnumVARIANTPtr;
+		typedef WCL::IFacePtr<IEnumVARIANT> IEnumVARIANTPtr;
 
 		// Validate parameters.
 		if (ppEnum == nullptr)

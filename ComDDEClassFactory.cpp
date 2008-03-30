@@ -66,7 +66,7 @@ HRESULT COMCALL ComDDEClassFactory::ParseDisplayName(IBindCtx* pBindCtx, LPOLEST
 	try
 	{
 		// Type shorthands.
-		typedef Core::IFacePtr<IMoniker> IMonikerPtr;
+		typedef WCL::IFacePtr<IMoniker> IMonikerPtr;
 
 		// Check output parameters.
 		if ( (pcEaten == nullptr) || (ppMoniker == nullptr) )
@@ -164,7 +164,7 @@ HRESULT COMCALL ComDDEClassFactory::GetObject(LPOLESTR pszItem, DWORD /*dwSpeedN
 	try
 	{
 		// Type shorthands.
-		typedef Core::IFacePtr<IDDEConversation> IDDEConversationPtr;
+		typedef WCL::IFacePtr<IDDEConversation> IDDEConversationPtr;
 
 		// Check output parameters.
 		if (ppObject == nullptr)

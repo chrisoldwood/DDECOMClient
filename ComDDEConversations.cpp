@@ -58,7 +58,7 @@ HRESULT COMCALL ComDDEConversations::get__NewEnum(IUnknown** ppEnum)
 	try
 	{
 		// Type shorthands.
-		typedef Core::IFacePtr<IEnumVARIANT> IEnumVARIANTPtr;
+		typedef WCL::IFacePtr<IEnumVARIANT> IEnumVARIANTPtr;
 
 		// Validate parameters.
 		if (ppEnum == nullptr)
@@ -90,7 +90,7 @@ HRESULT COMCALL ComDDEConversations::get_Item(long nIndex, IDDEConversation** pp
 	try
 	{
 		// Type shorthands.
-		typedef Core::IFacePtr<IDDEConversation> IDDEConversationPtr;
+		typedef WCL::IFacePtr<IDDEConversation> IDDEConversationPtr;
 
 		// Validate parameters.
 		if (ppIDDEConv == nullptr)

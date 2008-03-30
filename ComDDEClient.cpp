@@ -141,7 +141,7 @@ HRESULT COMCALL ComDDEClient::OpenConversation(BSTR bstrService, BSTR bstrTopic,
 	try
 	{
 		// Type shorthands.
-		typedef Core::IFacePtr<IDDEConversation> IDDEConversationPtr;
+		typedef WCL::IFacePtr<IDDEConversation> IDDEConversationPtr;
 
 		// Check output parameters.
 		if (ppIDDEConv == nullptr)
@@ -181,7 +181,7 @@ HRESULT COMCALL ComDDEClient::Conversations(IDDEConversations** ppIDDEConvs)
 	try
 	{
 		// Type shorthands.
-		typedef Core::IFacePtr<IDDEConversations> IDDEConversationsPtr;
+		typedef WCL::IFacePtr<IDDEConversations> IDDEConversationsPtr;
 
 		// Check output parameters.
 		if (ppIDDEConvs == nullptr)
