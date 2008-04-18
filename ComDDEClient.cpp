@@ -100,7 +100,7 @@ HRESULT COMCALL ComDDEClient::GetServerTopics(BSTR bstrService, SAFEARRAY** ppTo
 		if (bstrService == nullptr)
 			throw WCL::ComException(E_INVALIDARG, TXT("bstrService is NULL"));
 
-		std::tstring strService = W2T(bstrService);
+		tstring strService = W2T(bstrService);
 
 		CStrArray astrTopics;
 
@@ -155,8 +155,8 @@ HRESULT COMCALL ComDDEClient::OpenConversation(BSTR bstrService, BSTR bstrTopic,
 			throw WCL::ComException(E_INVALIDARG, TXT("bstrService/bstrTopic is NULL"));
 
 		// Create the conversation.
-		std::tstring strService = W2T(bstrService);
-		std::tstring strTopic   = W2T(bstrTopic);
+		tstring strService = W2T(bstrService);
+		tstring strTopic   = W2T(bstrTopic);
 
 		DDE::CltConvPtr     pConv    = DDE::CltConvPtr(m_pDDEClient->CreateConversation(strService.c_str(), strTopic.c_str()));
 		IDDEConversationPtr pComConv = IDDEConversationPtr(new ComDDEConversation(pConv), true);
@@ -235,14 +235,14 @@ HRESULT COMCALL ComDDEClient::RequestTextItem(BSTR bstrService, BSTR bstrTopic, 
 			throw WCL::ComException(E_INVALIDARG, TXT("bstrService/bstrTopic/bstrItem is NULL"));
 
 		// Create the conversation.
-		std::tstring strService = W2T(bstrService);
-		std::tstring strTopic   = W2T(bstrTopic);
+		tstring strService = W2T(bstrService);
+		tstring strTopic   = W2T(bstrTopic);
 
 		DDE::CltConvPtr pConv(m_pDDEClient->CreateConversation(strService.c_str(), strTopic.c_str()));
 
 		// Request the item value (CF_ANSI).
-		std::tstring strItem  = W2T(bstrItem);
-		std::tstring strValue = pConv->RequestString(strItem.c_str(), CF_TEXT);
+		tstring strItem  = W2T(bstrItem);
+		tstring strValue = pConv->RequestString(strItem.c_str(), CF_TEXT);
 
 		// Return value.
 		*pbstrValue = ::SysAllocString(T2W(strValue.c_str()));

@@ -26,7 +26,7 @@ public:
 	ComDDEConversation();
 
 	//! Construction from a Service and Topic name.
-	ComDDEConversation(const std::tstring& strService, const std::tstring& strTopic);
+	ComDDEConversation(const tstring& strService, const tstring& strTopic);
 
 	//! Construction from a DDE conversation.
 	ComDDEConversation(DDE::CltConvPtr pConv);
@@ -74,8 +74,8 @@ private:
 	//
 	// Members.
 	//
-	std::tstring	m_strService;		//!< The service name.
-	std::tstring	m_strTopic;			//!< The topic name.
+	tstring			m_strService;		//!< The service name.
+	tstring			m_strTopic;			//!< The topic name.
 	DDE::CltConvPtr	m_pConv;			//!< The underlying DDE conversation.
 };
 

@@ -177,13 +177,13 @@ HRESULT COMCALL ComDDEClassFactory::GetObject(LPOLESTR pszItem, DWORD /*dwSpeedN
 		if (pszItem == nullptr)
 			throw WCL::ComException(E_INVALIDARG, TXT("pszItem is NULL"));
 
-		std::tstring strService;
-		std::tstring strTopic;
-		std::tstring strItem;
+		tstring strService;
+		tstring strTopic;
+		tstring strItem;
 
 		// Split the item into "SERVICE|TOPIC!ITEM".
-		std::tstring strLink = W2T(pszItem);
-		CStrTok      oStrTok(strLink.c_str(), TXT("|!"));
+		tstring strLink = W2T(pszItem);
+		CStrTok oStrTok(strLink.c_str(), TXT("|!"));
 
 		// Extract the Service name.
 		if (oStrTok.MoreTokens())

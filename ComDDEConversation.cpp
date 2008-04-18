@@ -21,7 +21,7 @@ ComDDEConversation::ComDDEConversation()
 ////////////////////////////////////////////////////////////////////////////////
 //! Construction from a Service and Topic name.
 
-ComDDEConversation::ComDDEConversation(const std::tstring& strService, const std::tstring& strTopic)
+ComDDEConversation::ComDDEConversation(const tstring& strService, const tstring& strTopic)
 	: COM::IDispatchImpl<ComDDEConversation>(IID_IDDEConversation)
 	, m_strService(strService)
 	, m_strTopic(strTopic)
@@ -237,8 +237,8 @@ HRESULT COMCALL ComDDEConversation::RequestTextItem(BSTR bstrItem, BSTR* pbstrVa
 			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is not open"));
 
 		// Request the item value (CF_ANSI).
-		std::tstring strItem  = W2T(bstrItem);
-		std::tstring strValue = m_pConv->RequestString(strItem.c_str(), CF_TEXT);
+		tstring strItem  = W2T(bstrItem);
+		tstring strValue = m_pConv->RequestString(strItem.c_str(), CF_TEXT);
 
 		// Return value.
 		*pbstrValue = ::SysAllocString(T2W(strValue.c_str()));
