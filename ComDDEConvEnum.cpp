@@ -98,8 +98,11 @@ HRESULT COMCALL ComDDEConvEnum::Skip(ULONG nCount)
 	try
 	{
 		// Advance the iterator.
-		while ( (m_itConv != m_vDDEConvs.end()) && (--nCount > 0) )
+		while ( (m_itConv != m_vDDEConvs.end()) && (nCount > 0) )
+		{
 			++m_itConv;
+			--nCount;
+		}
 			
 		hr = (nCount == 0) ? S_OK : S_FALSE;
 	}
