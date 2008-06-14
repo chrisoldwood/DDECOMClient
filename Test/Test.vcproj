@@ -155,6 +155,15 @@
 			<File
 				RelativePath=".\Test.cpp">
 			</File>
+			<File
+				RelativePath=".\TestDDEClient.cpp">
+			</File>
+			<File
+				RelativePath=".\TestDDEConversation.cpp">
+			</File>
+			<File
+				RelativePath=".\TestDDEConversations.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

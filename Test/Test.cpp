@@ -1,101 +1,35 @@
-// Test.cpp : Defines the entry point for the console application.
-//
+////////////////////////////////////////////////////////////////////////////////
+//! \file   Test.cpp
+//! \brief  The test harness entry point.
+//! \author Chris Oldwood
 
 #include "stdafx.h"
 #include <tchar.h>
-#include <iomanip>
+#include <Core/UnitTest.hpp>
 #include <WCL/AutoCom.hpp>
-#include <WCL/ComPtr.hpp>
-#include <WCL/SafeVector.hpp>
-#include <WCL/ComStr.hpp>
 
-#import "../DDECOMClient.tlb" raw_interfaces_only no_smart_pointers
+////////////////////////////////////////////////////////////////////////////////
+// The test group functions.
 
-void TestDDEClient()
-{
-	try
-	{
-		typedef WCL::ComPtr<DDECOMClientLib::IDDEClient> IDDEClientPtr;
-		typedef WCL::IFacePtr<DDECOMClientLib::IDDEConversation> IDDEConversationPtr;
-		typedef WCL::SafeVector<VARIANT> VariantArray;
-		typedef VariantArray::const_iterator  CIter;
+extern void TestDDEClient();
+extern void TestDDEConversation();
+extern void TestDDEConversations();
 
-		IDDEClientPtr pDDEClient(__uuidof(DDECOMClientLib::DDEClient));
-
-		SAFEARRAY* pServersArray;
-
-		HRESULT hr = pDDEClient->RunningServers(&pServersArray);
-
-		if (FAILED(hr))
-			throw WCL::ComException(hr, pDDEClient, TXT(""));
-
-		VariantArray avtServers(pServersArray);
-
-		std::tcout << TXT("Running Servers & Topics: ") << avtServers.Size() << std::endl;
-
-		for (CIter itServer = avtServers.begin(); itServer != avtServers.end(); ++itServer)
-		{
-			std::wcout << V_BSTR(itServer) << std::endl;
-
-			SAFEARRAY* pTopicsArray;
-
-			HRESULT hr = pDDEClient->GetServerTopics(V_BSTR(itServer), &pTopicsArray);
-
-			if (FAILED(hr))
-				throw WCL::ComException(hr, pDDEClient, TXT(""));
-
-			VariantArray avtTopics(pTopicsArray);
-
-			for (CIter itTopic = avtTopics.begin(); itTopic != avtTopics.end(); ++itTopic)
-				std::wcout << L"\t" << V_BSTR(itTopic) << std::endl;
-		}
-
-		std::tcout << std::endl;
-		std::tcout << TXT("Requesting item - PROGMAN|PROGMAN!Accessories") << std::endl;
-
-		WCL::ComStr bstrService(TXT("PROGMAN"));
-		WCL::ComStr bstrTopic(TXT("PROGMAN"));
-		WCL::ComStr bstrItem(TXT("Accessories"));
-		WCL::ComStr bstrValue;
-
-		hr = pDDEClient->RequestTextItem(bstrService.Get(), bstrTopic.Get(), bstrItem.Get(), AttachTo(bstrValue));
-
-		if (FAILED(hr))
-			throw WCL::ComException(hr, pDDEClient, TXT(""));
-
-		std::wcout << bstrValue.Get() << std::endl;
-		std::tcout  << std::endl;
-		std::tcout  << TXT("Opening conversation - PROGMAN|PROGMAN") << std::endl;
-
-		IDDEConversationPtr pConv;
-
-		hr = pDDEClient->OpenConversation(bstrService.Get(), bstrTopic.Get(), AttachTo(pConv));
-
-		if (FAILED(hr))
-			throw WCL::ComException(hr, pDDEClient, TXT(""));
-
-		std::tcout << TXT("Requesting item - Accessories") << std::endl;
-
-		hr = pConv->RequestTextItem(bstrItem.Get(), AttachTo(bstrValue));
-
-		if (FAILED(hr))
-			throw WCL::ComException(hr, pDDEClient, TXT(""));
-
-		std::wcout << bstrValue.Get() << std::endl;
-		std::tcout << std::endl;
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << e.what() << std::endl;
-	}
-}
+////////////////////////////////////////////////////////////////////////////////
+//! The entry point for the test harness.
 
 int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
 {
-	WCL::AutoCom oCom(COINIT_APARTMENTTHREADED);
-//	WCL::AutoCom oCom(COINIT_MULTITHREADED);
+	TEST_SUITE_BEGIN
+	{
+		WCL::AutoCom oCom(COINIT_APARTMENTTHREADED);
+//		WCL::AutoCom oCom(COINIT_MULTITHREADED);
 
-	TestDDEClient();
+		TestDDEClient();
+		TestDDEConversation();
+		TestDDEConversations();
 
-	return EXIT_SUCCESS;
+		Core::SetTestRunFinalStatus(true);
+	}
+	TEST_SUITE_END
 }
