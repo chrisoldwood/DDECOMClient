@@ -202,7 +202,7 @@ HRESULT COMCALL ComDDEClassFactory::GetObject(LPOLESTR pszItem, DWORD /*dwSpeedN
 			throw WCL::ComException(MK_E_SYNTAX, TXT("The DDE link syntax is invalid"));
 
 		// Create a Conversation.
-		CDDEClient*         pDDEClient = ComDDEClient::DDEClient();
+		DDE::ClientPtr      pDDEClient = ComDDEClient::DDEClient();
 		DDE::CltConvPtr     pDDEConv   = DDE::CltConvPtr(pDDEClient->CreateConversation(strService.c_str(), strTopic.c_str()));
 		IDDEConversationPtr pComConv   = IDDEConversationPtr(new ComDDEConversation(pDDEConv), true);
 

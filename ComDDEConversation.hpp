@@ -76,6 +76,7 @@ private:
 	//
 	tstring			m_strService;		//!< The service name.
 	tstring			m_strTopic;			//!< The topic name.
+	DDE::ClientPtr	m_pDDEClient;		//!< The DDE client.
 	DDE::CltConvPtr	m_pConv;			//!< The underlying DDE conversation.
 };
 

@@ -193,7 +193,7 @@ HRESULT COMCALL ComDDEClient::Conversations(IDDEConversations** ppIDDEConvs)
 		CDDECltConvs apConvs;
 
 		// Get all open conversations.
-		CDDEClient::Instance()->GetAllConversations(apConvs);
+		m_pDDEClient->GetAllConversations(apConvs);
 
 		DDECltConvs vpCltConvs(apConvs.size());
 
@@ -257,13 +257,9 @@ HRESULT COMCALL ComDDEClient::RequestTextItem(BSTR bstrService, BSTR bstrTopic, 
 ////////////////////////////////////////////////////////////////////////////////
 //! Aquire the singleton DDE Client.
 
-CDDEClient* ComDDEClient::DDEClient()
+DDE::ClientPtr ComDDEClient::DDEClient()
 {
-	CDDEClient* pDDEClient = CDDEClient::Instance();
+	static DDE::ClientPtr client(new CDDEClient);
 
-	// Initialise on first use.
-	if (pDDEClient->Handle() == 0)
-		pDDEClient->Initialise();
-
-	return pDDEClient;
+	return client;
 }

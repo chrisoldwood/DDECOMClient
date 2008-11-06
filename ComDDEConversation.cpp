@@ -8,12 +8,14 @@
 #include <NCL/DDEException.hpp>
 #include <NCL/DDEClient.hpp>
 #include <WCL/VariantBool.hpp>
+#include "ComDDEClient.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Default constructor.
 
 ComDDEConversation::ComDDEConversation()
 	: COM::IDispatchImpl<ComDDEConversation>(IID_IDDEConversation)
+	, m_pDDEClient(ComDDEClient::DDEClient())
 	, m_pConv(nullptr)
 {
 }
@@ -25,6 +27,7 @@ ComDDEConversation::ComDDEConversation(const tstring& strService, const tstring&
 	: COM::IDispatchImpl<ComDDEConversation>(IID_IDDEConversation)
 	, m_strService(strService)
 	, m_strTopic(strTopic)
+	, m_pDDEClient(ComDDEClient::DDEClient())
 	, m_pConv(nullptr)
 {
 }
@@ -36,6 +39,7 @@ ComDDEConversation::ComDDEConversation(DDE::CltConvPtr pConv)
 	: COM::IDispatchImpl<ComDDEConversation>(IID_IDDEConversation)
 	, m_strService(pConv->Service())
 	, m_strTopic(pConv->Topic())
+	, m_pDDEClient(ComDDEClient::DDEClient())
 	, m_pConv(pConv)
 {
 }
@@ -161,7 +165,7 @@ HRESULT COMCALL ComDDEConversation::Open()
 			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is already open"));
 
 		// Open it.
-		m_pConv = DDE::CltConvPtr(CDDEClient::Instance()->CreateConversation(m_strService.c_str(), m_strTopic.c_str()));
+		m_pConv = DDE::CltConvPtr(m_pDDEClient->CreateConversation(m_strService.c_str(), m_strTopic.c_str()));
 
 		hr = S_OK;
 	}

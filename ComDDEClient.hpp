@@ -58,13 +58,13 @@ public:
 	//
 
 	//! Aquire the singleton DDE Client.
-	static CDDEClient* DDEClient();
+	static DDE::ClientPtr DDEClient();
 
 private:
 	//
 	// Members.
 	//
-	CDDEClient*	m_pDDEClient;		//!< The underlying DDE client.
+	DDE::ClientPtr	m_pDDEClient;		//!< The underlying DDE client.
 };
 
 #endif // COMDDECLIENT_HPP
