@@ -19,10 +19,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NCL", "..\Lib\NCL\NCL.vcpro
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Legacy", "..\Lib\Legacy\Legacy.vcproj", "{AED77F84-49CF-4B84-B319-2D07025ECA06}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcproj", "{DE18A7DE-6E20-43C1-BEFF-98F17DD545B9}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -32,37 +28,33 @@ Global
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
 	EndGlobalSection
 	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 8
-		SccProjectUniqueName0 = DDECOMClient.vcproj
+		SccNumberOfProjects = 7
 		SccLocalPath0 = .
 		CanCheckoutShared = true
-		SccProjectUniqueName1 = ..\\Lib\\Core\\Core.vcproj
-		SccProjectName1 = \u0022$/Win32/Lib/Core\u0022,\u0020QWDAAAAA
-		SccLocalPath1 = ..\\Lib\\Core
+		SolutionUniqueID = {69F78BB5-15F7-48B4-A3C1-A3DBE0F1C7A7}
+		SccProjectUniqueName1 = DDECOMClient.vcproj
+		SccLocalPath1 = .
 		CanCheckoutShared = true
-		SccProjectUniqueName2 = ..\\Lib\\WCL\\Wcl.vcproj
-		SccProjectName2 = \u0022$/Win32/Lib/WCL\u0022,\u0020HPAAAAAA
-		SccLocalPath2 = ..\\Lib\\WCL
+		SccProjectUniqueName2 = ..\\Lib\\Core\\Core.vcproj
+		SccProjectName2 = \u0022$/Win32/Lib/Core\u0022,\u0020QWDAAAAA
+		SccLocalPath2 = ..\\Lib\\Core
 		CanCheckoutShared = true
-		SccProjectUniqueName3 = ..\\Lib\\COM\\COM.vcproj
-		SccProjectName3 = \u0022$/Win32/Lib/COM\u0022,\u0020FCEAAAAA
-		SccLocalPath3 = ..\\Lib\\COM
+		SccProjectUniqueName3 = ..\\Lib\\WCL\\Wcl.vcproj
+		SccProjectName3 = \u0022$/Win32/Lib/WCL\u0022,\u0020HPAAAAAA
+		SccLocalPath3 = ..\\Lib\\WCL
 		CanCheckoutShared = true
-		SccProjectUniqueName4 = ..\\Lib\\NCL\\NCL.vcproj
-		SccProjectName4 = \u0022$/Win32/Lib/NCL\u0022,\u0020JRCAAAAA
-		SccLocalPath4 = ..\\Lib\\NCL
+		SccProjectUniqueName4 = ..\\Lib\\COM\\COM.vcproj
+		SccProjectName4 = \u0022$/Win32/Lib/COM\u0022,\u0020FCEAAAAA
+		SccLocalPath4 = ..\\Lib\\COM
 		CanCheckoutShared = true
-		SccProjectUniqueName5 = ..\\Lib\\Legacy\\Legacy.vcproj
-		SccProjectName5 = \u0022$/Win32/Lib/Legacy\u0022,\u0020JHEAAAAA
-		SccLocalPath5 = ..\\Lib\\Legacy
+		SccProjectUniqueName5 = ..\\Lib\\NCL\\NCL.vcproj
+		SccProjectName5 = \u0022$/Win32/Lib/NCL\u0022,\u0020JRCAAAAA
+		SccLocalPath5 = ..\\Lib\\NCL
 		CanCheckoutShared = true
 		SccProjectUniqueName6 = Test\\Test.vcproj
 		SccProjectName6 = \u0022$/Win32/DDECOMClient/Test\u0022,\u0020XFEAAAAA
 		SccLocalPath6 = Test
 		CanCheckoutShared = true
-		SccLocalPath7 = .
-		CanCheckoutShared = true
-		SolutionUniqueID = {69F78BB5-15F7-48B4-A3C1-A3DBE0F1C7A7}
 	EndGlobalSection
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -91,10 +83,6 @@ Global
 		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}.Debug.Build.0 = Debug|Win32
 		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}.Release.ActiveCfg = Release|Win32
 		{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}.Release.Build.0 = Release|Win32
-		{AED77F84-49CF-4B84-B319-2D07025ECA06}.Debug.ActiveCfg = Debug|Win32
-		{AED77F84-49CF-4B84-B319-2D07025ECA06}.Debug.Build.0 = Debug|Win32
-		{AED77F84-49CF-4B84-B319-2D07025ECA06}.Release.ActiveCfg = Release|Win32
-		{AED77F84-49CF-4B84-B319-2D07025ECA06}.Release.Build.0 = Release|Win32
 		{DE18A7DE-6E20-43C1-BEFF-98F17DD545B9}.Debug.ActiveCfg = Debug|Win32
 		{DE18A7DE-6E20-43C1-BEFF-98F17DD545B9}.Debug.Build.0 = Debug|Win32
 		{DE18A7DE-6E20-43C1-BEFF-98F17DD545B9}.Release.ActiveCfg = Release|Win32
