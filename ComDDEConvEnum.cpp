@@ -61,7 +61,7 @@ HRESULT COMCALL ComDDEConvEnum::Next(ULONG nCount, VARIANT* avItems, ULONG* plFe
 
 		// Calculate how many we can return.
 		size_t nAvail   = std::distance(m_itConv, static_cast<ConstIter>(m_vDDEConvs.end()));
-		size_t nFetched = min(nAvail, nCount);
+		size_t nFetched = std::min<size_t>(nAvail, nCount);
 
 		// Fill in the return buffer.
 		VARIANT*  itVarStart = avItems;
