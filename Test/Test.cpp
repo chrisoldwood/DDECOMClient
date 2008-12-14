@@ -18,16 +18,16 @@ extern void TestDDEConversations();
 ////////////////////////////////////////////////////////////////////////////////
 //! The entry point for the test harness.
 
-int _tmain(int /*argc*/, _TCHAR* /*argv*/[])
+int _tmain(int argc, _TCHAR* argv[])
 {
-	TEST_SUITE_BEGIN
+	TEST_SUITE_BEGIN(argc, argv)
 	{
 		WCL::AutoCom oCom(COINIT_APARTMENTTHREADED);
 //		WCL::AutoCom oCom(COINIT_MULTITHREADED);
 
-		TestDDEClient();
-		TestDDEConversation();
-		TestDDEConversations();
+		TEST_CASE(TestDDEClient);
+		TEST_CASE(TestDDEConversation);
+		TEST_CASE(TestDDEConversations);
 
 		Core::SetTestRunFinalStatus(true);
 	}
