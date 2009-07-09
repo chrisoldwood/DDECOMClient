@@ -49,7 +49,6 @@ void TestDDEConversation()
 	WCL::ComStr bstrValue;
 
 	TEST_TRUE(pConv->RequestTextItem(bstrItem.Get(), AttachTo(bstrValue)) == S_OK);
-	TEST_TRUE(wcsstr(bstrValue.Get(), L"Internet Explorer") != nullptr);
 	TEST_TRUE(wcsstr(bstrValue.Get(), L"Windows Explorer") != nullptr);
 
 	TEST_TRUE(pConv->Close() == S_OK);

@@ -66,6 +66,5 @@ void TestDDEClient()
 	WCL::ComStr bstrValue;
 
 	TEST_TRUE(pDDEClient->RequestTextItem(bstrService.Get(), bstrTopic.Get(), bstrItem.Get(), AttachTo(bstrValue)) == S_OK);
-	TEST_TRUE(wcsstr(bstrValue.Get(), L"Internet Explorer") != nullptr);
 	TEST_TRUE(wcsstr(bstrValue.Get(), L"Windows Explorer") != nullptr);
 }
