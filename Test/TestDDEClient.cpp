@@ -37,7 +37,7 @@ void TestDDEClient()
 
 	IDDEClientPtr pDDEClient(__uuidof(DDECOMClientLib::DDEClient));
 
-	TEST_TRUE(pDDEClient.Get() != nullptr);
+	TEST_TRUE(pDDEClient.get() != nullptr);
 
 	typedef WCL::SafeVector<VARIANT> VariantArray;
 

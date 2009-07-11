@@ -61,7 +61,7 @@ HRESULT COMCALL ComDDEConversation::put_Service(BSTR bstrService)
 	try
 	{
 		// Currently open?
-		if (m_pConv.Get() != nullptr)
+		if (m_pConv.get() != nullptr)
 			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is open"));
 
 		// Validate parameters.
@@ -111,7 +111,7 @@ HRESULT COMCALL ComDDEConversation::put_Topic(BSTR bstrTopic)
 	try
 	{
 		// Currently open?
-		if (m_pConv.Get() != nullptr)
+		if (m_pConv.get() != nullptr)
 			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is open"));
 
 		// Validate parameters.
@@ -161,7 +161,7 @@ HRESULT COMCALL ComDDEConversation::Open()
 	try
 	{
 		// Already open?
-		if (m_pConv.Get() != nullptr)
+		if (m_pConv.get() != nullptr)
 			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is already open"));
 
 		// Open it.
@@ -188,7 +188,7 @@ HRESULT COMCALL ComDDEConversation::IsOpen(VARIANT_BOOL* pbIsOpen)
 			throw WCL::ComException(E_POINTER, TXT("pbIsOpen is NULL"));
 
 		// Return conversation status.
-		*pbIsOpen = ToVariantBool(m_pConv.Get() != nullptr);
+		*pbIsOpen = ToVariantBool(m_pConv.get() != nullptr);
 
 		hr = S_OK;
 	}
@@ -237,7 +237,7 @@ HRESULT COMCALL ComDDEConversation::RequestTextItem(BSTR bstrItem, BSTR* pbstrVa
 			throw WCL::ComException(E_INVALIDARG, TXT("bstrItem is NULL"));
 
 		// Conversation not open?
-		if (m_pConv.Get() == nullptr)
+		if (m_pConv.get() == nullptr)
 			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is not open"));
 
 		// Request the item value (CF_ANSI).

@@ -29,7 +29,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		TEST_CASE(TestDDEConversation);
 		TEST_CASE(TestDDEConversations);
 
-		Core::SetTestRunFinalStatus(true);
+		Core::setTestRunFinalStatus(true);
 	}
 	TEST_SUITE_END
 }

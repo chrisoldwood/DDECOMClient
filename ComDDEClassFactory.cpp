@@ -114,7 +114,7 @@ HRESULT COMCALL ComDDEClassFactory::ParseDisplayName(IBindCtx* pBindCtx, LPOLEST
 		IMonikerPtr pCompositeMoniker;
 
 		// Create the composite moniker.
-		hr = ::CreateGenericComposite(pClassMoniker.Get(), pItemMoniker.Get(), AttachTo(pCompositeMoniker));
+		hr = ::CreateGenericComposite(pClassMoniker.get(), pItemMoniker.get(), AttachTo(pCompositeMoniker));
 
 		if (FAILED(hr))
 			throw WCL::ComException(hr, TXT("Failed to create the DDE conversation composite moniker"));
