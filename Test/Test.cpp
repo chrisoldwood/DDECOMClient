@@ -9,27 +9,16 @@
 #include <WCL/AutoCom.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
-// The test group functions.
-
-extern void TestDDEClient();
-extern void TestDDEConversation();
-extern void TestDDEConversations();
-
-////////////////////////////////////////////////////////////////////////////////
 //! The entry point for the test harness.
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	TEST_SUITE_BEGIN(argc, argv)
+	TEST_SUITE(argc, argv)
 	{
 		WCL::AutoCom oCom(COINIT_APARTMENTTHREADED);
 //		WCL::AutoCom oCom(COINIT_MULTITHREADED);
 
-		TEST_CASE(TestDDEClient);
-		TEST_CASE(TestDDEConversation);
-		TEST_CASE(TestDDEConversations);
-
-		Core::setTestRunFinalStatus(true);
+		TEST_SUITE_RUN();
 	}
 	TEST_SUITE_END
 }
