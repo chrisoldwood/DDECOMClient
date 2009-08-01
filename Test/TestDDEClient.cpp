@@ -11,9 +11,6 @@
 #import "../DDECOMClient.tlb" raw_interfaces_only no_smart_pointers
 #include <algorithm>
 
-////////////////////////////////////////////////////////////////////////////////
-//! Comparison function for a BSTR inside a VARIANT.
-
 struct Compare
 {
 	Compare(const wchar_t* psz)
@@ -28,10 +25,7 @@ struct Compare
 	const wchar_t* m_psz;
 };
 
-////////////////////////////////////////////////////////////////////////////////
-//! The unit tests for the DDEClient class.
-
-void TestDDEClient()
+TEST_SET(DDEClient)
 {
 	typedef WCL::ComPtr<DDECOMClientLib::IDDEClient> IDDEClientPtr;
 
@@ -68,3 +62,4 @@ void TestDDEClient()
 	TEST_TRUE(pDDEClient->RequestTextItem(bstrService.Get(), bstrTopic.Get(), bstrItem.Get(), AttachTo(bstrValue)) == S_OK);
 	TEST_TRUE(wcsstr(bstrValue.Get(), L"Windows Explorer") != nullptr);
 }
+TEST_SET_END

@@ -10,10 +10,7 @@
 #include <WCL/VariantBool.hpp>
 #import "../DDECOMClient.tlb" raw_interfaces_only no_smart_pointers
 
-////////////////////////////////////////////////////////////////////////////////
-//! The unit tests for the DDEConversations class.
-
-void TestDDEConversations()
+TEST_SET(DDEConversations)
 {
 	typedef WCL::ComPtr<DDECOMClientLib::IDDEClient> IDDEClientPtr;
 	typedef WCL::ComPtr<DDECOMClientLib::IDDEConversation> IDDEConversationPtr;
@@ -78,3 +75,4 @@ void TestDDEConversations()
 	TEST_TRUE(pEnum2->Reset() == S_OK);
 	TEST_TRUE(pEnum2->Skip(2) == S_OK);
 }
+TEST_SET_END
