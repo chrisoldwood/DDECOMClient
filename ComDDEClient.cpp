@@ -10,7 +10,7 @@
 #include <NCL/DDEException.hpp>
 #include "ComDDEConversation.hpp"
 #include "ComDDEConversations.hpp"
-#include <WCL/SafeVector.hpp>
+#include <WCL/VariantVector.hpp>
 #include <WCL/StrArray.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ HRESULT COMCALL ComDDEClient::RunningServers(SAFEARRAY** ppServers)
 	try
 	{
 		// Type shorthands.
-		typedef WCL::SafeVector<VARIANT> VariantArray;
+		typedef WCL::VariantVector<VARIANT> VariantArray;
 
 		// Check output parameters.
 		if (ppServers == nullptr)
@@ -87,7 +87,7 @@ HRESULT COMCALL ComDDEClient::GetServerTopics(BSTR bstrService, SAFEARRAY** ppTo
 	try
 	{
 		// Type shorthands.
-		typedef WCL::SafeVector<VARIANT> VariantArray;
+		typedef WCL::VariantVector<VARIANT> VariantArray;
 
 		// Check output parameters.
 		if (ppTopics == nullptr)

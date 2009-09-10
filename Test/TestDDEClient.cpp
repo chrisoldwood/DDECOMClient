@@ -6,7 +6,7 @@
 #include "stdafx.h"
 #include <Core/UnitTest.hpp>
 #include <WCL/ComPtr.hpp>
-#include <WCL/SafeVector.hpp>
+#include <WCL/VariantVector.hpp>
 #include <WCL/ComStr.hpp>
 #import "../DDECOMClient.tlb" raw_interfaces_only no_smart_pointers
 #include <algorithm>
@@ -33,7 +33,7 @@ TEST_SET(DDEClient)
 
 	TEST_TRUE(pDDEClient.get() != nullptr);
 
-	typedef WCL::SafeVector<VARIANT> VariantArray;
+	typedef WCL::VariantVector<VARIANT> VariantArray;
 
 	SAFEARRAY* pServersArray = nullptr;
 
