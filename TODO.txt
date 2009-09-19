@@ -1,0 +1,7 @@
+- Fixed last example code (oDDEClient -> oDDEConv)
+
+- Add section about difference between the two RequestItemText() methods.
+
+- Add support for links.
+
+- Add support for advise loops.
