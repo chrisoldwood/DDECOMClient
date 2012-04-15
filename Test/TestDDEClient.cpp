@@ -28,12 +28,19 @@ struct Compare
 TEST_SET(DDEClient)
 {
 	typedef WCL::ComPtr<DDECOMClientLib::IDDEClient> IDDEClientPtr;
+	typedef WCL::VariantVector<VARIANT> VariantArray;
 
+TEST_CASE("client object can be instantiated")
+{
 	IDDEClientPtr pDDEClient(__uuidof(DDECOMClientLib::DDEClient));
 
 	TEST_TRUE(pDDEClient.get() != nullptr);
+}
+TEST_CASE_END
 
-	typedef WCL::VariantVector<VARIANT> VariantArray;
+TEST_CASE("running servers can be retrieved")
+{
+	IDDEClientPtr pDDEClient(__uuidof(DDECOMClientLib::DDEClient));
 
 	SAFEARRAY* pServersArray = nullptr;
 
@@ -45,6 +52,12 @@ TEST_SET(DDEClient)
 	TEST_TRUE(std::find_if(avtServers.begin(), avtServers.end(), Compare(L"Folders")) != avtServers.end());
 	TEST_TRUE(std::find_if(avtServers.begin(), avtServers.end(), Compare(L"Shell")) != avtServers.end());
 	TEST_TRUE(std::find_if(avtServers.begin(), avtServers.end(), Compare(L"PROGMAN")) != avtServers.end());
+}
+TEST_CASE_END
+
+TEST_CASE("supported topics for a service can be retrieved")
+{
+	IDDEClientPtr pDDEClient(__uuidof(DDECOMClientLib::DDEClient));
 
 	SAFEARRAY* pTopicsArray = nullptr;
 
@@ -53,13 +66,24 @@ TEST_SET(DDEClient)
 	VariantArray avtTopics(pTopicsArray);
 
 	TEST_TRUE(std::find_if(avtTopics.begin(), avtTopics.end(), Compare(L"AppProperties")) != avtTopics.end());
+}
+TEST_CASE_END
+
+TEST_CASE("single text item for a service and topic can be retrieved")
+{
+	IDDEClientPtr pDDEClient(__uuidof(DDECOMClientLib::DDEClient));
 
 	WCL::ComStr bstrService(TXT("PROGMAN"));
 	WCL::ComStr bstrTopic(TXT("PROGMAN"));
 	WCL::ComStr bstrItem(TXT("Accessories"));
 	WCL::ComStr bstrValue;
 
-	TEST_TRUE(pDDEClient->RequestTextItem(bstrService.Get(), bstrTopic.Get(), bstrItem.Get(), AttachTo(bstrValue)) == S_OK);
+	HRESULT result = pDDEClient->RequestTextItem(bstrService.Get(), bstrTopic.Get(), bstrItem.Get(), AttachTo(bstrValue));
+
+	TEST_TRUE(result == S_OK);
 	TEST_TRUE(wcsstr(bstrValue.Get(), L"Windows Explorer") != nullptr);
+}
+TEST_CASE_END
+
 }
 TEST_SET_END
