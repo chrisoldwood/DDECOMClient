@@ -244,9 +244,9 @@ Dim oDDEConv
 Set oDDEConv = GetObject("ddelink://PROGMAN|PROGMAN")
 
 Dim strValue1, strValue2, strValue3
-strValue1 = oDDEClient.RequestTextItem("Accessories")
-strValue2 = oDDEClient.RequestTextItem("Games")
-strValue3 = oDDEClient.RequestTextItem("Startup")
+strValue1 = oDDEConv.RequestTextItem("Accessories")
+strValue2 = oDDEConv.RequestTextItem("Games")
+strValue3 = oDDEConv.RequestTextItem("Startup")
 </pre>
 
 <hr>
