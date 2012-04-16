@@ -1,15 +1,7 @@
-- Fix last example code (oDDEClient -> oDDEConv)
-
-- Add section about difference between the two RequestItemText() methods.
+- Add helpfile section about difference between the two RequestItemText() methods.
 
 - Add support for links.
 
 - Add support for advise loops.
 
 - Change "ddelink:" moniker to "ddeconv:" and add a proper "ddelink:" moniker.
-
-- Make VBS tests more obvious about what they are testing.
-
-- Change unit tests to proper unit tests, i.e. split asserts into actual tests.
-
-- Fix buffer overrun (?) with VC++ 7.1 build + VBS tests on Vista (Val: output looks garbled).
