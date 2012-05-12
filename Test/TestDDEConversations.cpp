@@ -35,6 +35,9 @@ TEST_SET(DDEConversations)
 	ASSERT(result1 == S_OK);
 	ASSERT(result2 == S_OK);
 
+	DEBUG_USE_ONLY(result1);
+	DEBUG_USE_ONLY(result2);
+
 TEST_CASE("client can be queried for collection of open conversations")
 {
 	IDDEConversationsPtr pConvs;
