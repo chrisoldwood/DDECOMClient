@@ -39,7 +39,7 @@ HRESULT COMCALL ComDDEConversations::get_Count(long* plCount)
 			throw WCL::ComException(E_POINTER, TXT("plCount is NULL"));
 
 		// Return the count.
-		*plCount = m_vDDEConvs.size();
+		*plCount = static_cast<long>(m_vDDEConvs.size());
 
 		hr = S_OK;
 	}
@@ -100,7 +100,7 @@ HRESULT COMCALL ComDDEConversations::get_Item(long nIndex, IDDEConversation** pp
 		*ppIDDEConv = nullptr;
 
 		// Avoid "signed/unsigned mismatch" errors.
-		long nSize = m_vDDEConvs.size();
+		long nSize = static_cast<long>(m_vDDEConvs.size());
 	
 		// Validate input parameters.
 		if ( (nIndex < 0) || (nIndex >= nSize) )

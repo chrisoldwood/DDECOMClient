@@ -120,7 +120,7 @@ HRESULT COMCALL ComDDEClassFactory::ParseDisplayName(IBindCtx* pBindCtx, LPOLEST
 			throw WCL::ComException(hr, TXT("Failed to create the DDE conversation composite moniker"));
 
 		// Write output values.
-		*pcEaten   = nLength;
+		*pcEaten   = static_cast<ULONG>(nLength);
 		*ppMoniker = pCompositeMoniker.Detach();
 
 		hr = S_OK;

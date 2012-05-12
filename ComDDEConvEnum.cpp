@@ -79,7 +79,7 @@ HRESULT COMCALL ComDDEConvEnum::Next(ULONG nCount, VARIANT* avItems, ULONG* plFe
 
 		// Set the number fetched, if requested.
 		if (plFetched != nullptr)
-			*plFetched = nFetched;
+			*plFetched = static_cast<ULONG>(nFetched);
 
 		hr = (nFetched == nCount) ? S_OK : S_FALSE;
 	}
