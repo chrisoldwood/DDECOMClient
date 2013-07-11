@@ -13,111 +13,130 @@ td		{ font-family: Verdana, Arial; font-size: 10pt; align: left }
 
 <body>
 
-<h3 align="center">DDE COM Client v1.0</h3>
+<h3 align="center">DDE COM Client v1.1</h3>
 
 <a name="Introduction"></a>
-<h5>Introduction</h5>
+<h4>Introduction</h4>
 
 <p>
 This is a COM component to allow scripting of DDE Servers. It is an Automation
-Server (i.e. it is programmable via IDispatch) that houses two fundamental COM
-classes. The first is a <i>DDE Client</i>, which is a Singleton style object
-that can be used to make ad-hoc DDE queries and querying for running DDE
+Server (i.e. it is programmable via <code>IDispatch</code>) that houses a number
+of COM classes. The first is a <i>DDE Client</i>, which is a Singleton style
+object that can be used to make ad-hoc DDE queries and querying for running DDE
 servers. The second is for a specific <i>DDE Conversation</i> and can be used
 as an optimisation when you need to query many values from the same DDE source.
 </p>
 <p>
-At present it only supports the requesting of data in CF_TEXT format, which is
+At present it only supports the requesting of data in <code>CF_TEXT</code> format, which is
 then converted to UNICODE to pass back over the COM interface. Most of the DDE
 servers I have dealt with were ANSI based and given the nature of scripting I
-felt this was probably good enough for a first attempt. If there is a need to
-allow access in other formats (e.g. CF_UNICODETEXT, CF_DIF etc) I will add to
-the API. It also only supports DDE Requests [XTYP_REQUEST], but could be
-easily extended to allow Pokes [XTYP_POKE] and Executes [XTYP_EXECUTE].
+felt this was probably a good first order approximation. If there is a need to
+allow access in other formats (e.g. <code>CF_UNICODETEXT</code>, <code>CF_DIF</code>,
+etc) I will add them to the API as and when the need arises.
 </p>
 <p>
-The other major feature of DDE that is missing is the asynchronous updating of
-values via advise loops (a.k.a. DDE Links). These have not been implemented as
-I did not know if it is possible to handle COM events from scripting languages
-such as VBScript.
+It supports the main synchronous transaction types, i.e. reading
+(<code>XTYP_REQUEST</code>), writing (<code>XTYP_POKE</code>) and executing
+(<code>XTYP_EXECUTE</code>). The main feature of DDE that this component is missing
+is the asynchronous updating of values via advise loops (a.k.a. DDE Links).
+These have not been implemented as I didn't know if it was possible to handle
+COM events from scripting languages such as VBScript, which is it's intended
+audience.
 </p>
 <p>
-The component is implemented using <i>dual</i> interfaces, so also supports
-early binding. However, if you're using C++ you would be better off using the
-underlying NCL library/DDE classes directly.
+The component is implemented in C++ using COM <i>dual</i> interfaces, so also
+supports early binding. However, if you're using C++ you might be better off
+using my underlying <a href="http://www.chrisoldwood.com/win32.htm#ncl">NCL</a>
+library/DDE classes directly.
 </p>
 
 <hr>
 
 <a name="DDEClient"></a>
-<h5>The DDE Client Class</h5>
+<h4>The DDE Client Class</h4>
 
 <p>
 The DDE Client class is essentially a Singleton style class that provides
 simple access to DDE servers. If all you need to do is query for a few values
 from a DDE source or two you can do it with repeated calls to
 <i>RequestTextItem</i>. It also provides access to the Wildcard style request
-[XTYP_WILDCONNECT] so that you can query for running servers and their topics.
+(<code>XTYP_WILDCONNECT</code>) so that you can query for running servers and their topics.
 </p> 
 
-<h6>String[] RunningServers()</h6>
+<h5>string[] RunningServers()</h5>
 <p>
 Finds out which DDE servers are currently running and returns a collection of
 the server names. The collection is an array of strings.
 </p>
 
-<h6>String[] GetServerTopics(String strService)</h6>
+<h5>string[] GetServerTopics(string service)</h5>
 <p>
-Finds out what topics are supported by a DDE server. The return value is an
-array of strings which are the topic names.
+Finds out what topics are supported by a running DDE server. The return value
+is an array of strings which are the topic names.
 </p>
 
-<h6>IDDEConversation OpenConversation(String strService, String strTopic)</h6>
+<h5>IDDEConversation OpenConversation(string service, string topic)</h5>
 <p>
 Open a DDE conversation for a specific Server and Topic.<br/>
-See the DDE Conversation class for other ways to open a conversation.
+See the <a href="#DDEConversation">DDE Conversation</a> class for other ways to
+open a conversation.
 </p>
 
-<h6>IDDEConversations Conversations()</h6>
+<h5>IDDEConversations Conversations()</h5>
 <p>
 Get the collection of open DDE conversations. This collection is enumerable
 using the "For Each" idiom or can be indexed directly using the <i>Item</i>
 method<br/>
-NB: The Item method follows the VBScript and WMI convention of being 0-based.
+Note: The Item method follows the VBScript and WMI convention of being
+<i>0-based</i>.
 </p>
 
-<h6>String RequestTextItem(BSTR strService, BSTR strTopic, BSTR strItem)</h6>
+<h5>string RequestTextItem(string service, string topic, string item)</h5>
 <p>
 Request the current value for a single item from a named service and topic. The
-item is requested in CF_TEXT (i.e. ANSI) format and then converted to UNICODE
-to pass back via COM as a string.
+item is requested in <code>CF_TEXT</code> (i.e. ANSI) format and then converted
+to UNICODE to pass back via COM as a string.
+</p>
+
+<h5>void PokeTextItem(string service, string topic, string item, string value)</h5>
+<p>
+Set the value of a single item for a named service and topic. The item will be
+passed in <code>CF_TEXT</code> (i.e. ANSI) format, even though it's being passed
+to the COM server via a Unicode string.
+</p>
+
+<h5>void ExecuteCommand(string service, string topic, string command)</h5>
+<p>
+Send a command string to the DDE server to be executed. The string will be 
+passed in <code>CF_TEXT</code> (i.e. ANSI) format, even though it's being passed
+to the COM server via a Unicode string.
 </p>
 
 <a name="DDEConversation"></a>
-<h5>The DDE Conversation Class</h5>
+<h4>The DDE Conversation Class</h4>
 
 <p>
 The DDE Conversation class is really an optimisation (and an excuse for me to
-implement a COM collection :-) that avoids the overhead of creating a conversation
+implement a COM collection) that avoids the overhead of creating a conversation
 every time an item is requested. If you have many values to request from a
-single Service|Topic pair, open an explicit conversation either from the DDE
-Clients' <i>OpenConversation</i> method, or use the "ddelink:" moniker
-namespace, then use that to request the items.
+single Service|Topic pair you can open an explicit conversation either from
+the DDE Clients' <i>OpenConversation</i> method, or use the "ddelink:" moniker
+namespace and then use that to request the items.
 </p> 
 
-<h6>Property: String Service</h6>
+<h5>Property: string Service</h5>
 <p>
 This property is the DDE service name. It can be read at any time, but only
 modified when the conversation is not open.
 </p>
 
-<h6>Property: String Topic</h6>
+<h5>Property: string Topic</h5>
 <p>
 This property is the DDE topic name. It can be read at any time, but only
 modified when the conversation is not open.
 </p>
 
-<h6>Open()</h6>
+<h5>void Open()</h5>
 <p>
 Opens the conversation specified by the Service and Topic properties. If the
 conversation is already open, an error is returned.<br/>
@@ -126,31 +145,45 @@ DDE Conversation object, setting the Service and Topic names and then calling
 Open().
 </p>
 
-<h6>Boolean IsOpen()</h6>
+<h5>bool IsOpen()</h5>
 <p>
 Checks if the conversation is currently open. Returns True or False.
 </p>
 
-<h6>Close()</h6>
+<h5>void Close()</h5>
 <p>
 Closes the DDE conversation. If the conversation is not open then the operation
 has no effect.
 </p>
 
-<h6>String RequestTextItem(String strItem)</h6>
+<h5>string RequestTextItem(string item)</h5>
 <p>
-Request the current value for a single item. The item is requested in CF_TEXT
-(i.e. ANSI) format and then converted to UNICODE to pass back via COM as a
-string.
+Request the current value for a single item. The item is requested in
+<code>CF_TEXT</code> (i.e. ANSI) format and then converted to UNICODE to pass
+back via COM as a string.
+</p>
+
+<h5>void PokeTextItem(string item, string value)</h5>
+<p>
+Set the value of a single item. The item will be passed in <code>CF_TEXT</code>
+(i.e. ANSI) format, even though it's being passed to the COM server via a
+Unicode string.
+</p>
+
+<h5>void ExecuteCommand(string command)</h5>
+<p>
+Send a command string to the DDE server to be executed. The string will be 
+passed in <code>CF_TEXT</code> (i.e. ANSI) format, even though it's being passed
+to the COM server via a Unicode string.
 </p>
 
 <a name="Moniker"></a>
-<h5>The DDE Conversation Moniker Namespace</h5>
+<h4>The DDE Conversation Moniker Namespace</h4>
 
 <p>
 WMI uses a moniker namespace of "winmgmts" to support simpler creation of WMI
 queries by encoding the query as a moniker item, which in VBScript you pass
-to GetObject(). You can achieve a similar effect with DDE Conversations by
+to <code>GetObject()</code>. You can achieve a similar effect with DDE Conversations by
 using the "ddelink" namespace. The full moniker consists of the "ddelink:"
 prefix, a "//" separator and the moniker item is the Service and Topic name
 in DDE Link format, e.g.
@@ -162,34 +195,34 @@ links are added the syntax can be updated to allow a "!Item" style suffix.
 </p>
 
 <a name="Errors"></a>
-<h5>Errors</h5>
+<h4>Errors</h4>
 
 <p>
-All the COM objects support IErrorInfo, so you will receive textual error
-messages along with the result code. If the underlying error comes from DDE
-itself, then the symbolic name for the error code will be included (e.g.
-DMLERR_BUSY) which you can look up in the DDE SDK.
+All the COM objects support <code>IErrorInfo</code>, so you will receive
+textual error messages along with the result code. If the underlying error
+comes from DDE itself, then the symbolic name for the error code will be
+included (e.g. <code>DMLERR_BUSY</code>) which you can look up in the DDE SDK.
 </p>
 
 <hr>
 
 <a name="Examples"></a>
-<h5>Examples</h5>
+<h4>Examples</h4>
 
 <p>
 The following set of examples should cover the most common scenarios. They are
-written in VBScript as scripting was the reason I created the components. The
+written in VBScript as scripting was the reason I created the component. The
 initial example shows how to create the DDE Client, which is then assumed in
 the subsequent code snippets.
 </p> 
 
-<h6>Creating the DDE Client</h6>
+<h5>Creating the DDE Client</h5>
 <pre>
 Dim oDDEClient
 Set oDDEClient = CreateObject("DDECOMClient.DDEClient")
 </pre>
 
-<h6>Listing the Running Servers and Topics</h6>
+<h5>Listing the Running Servers and Topics</h5>
 <pre>
 Dim astrServers, astrTopics
 Dim i, j
@@ -211,13 +244,13 @@ For i = LBound(astrServers) To UBound(astrServers)
 Next
 </pre>
 
-<h6>Requesting a Single Item</h6>
+<h5>Requesting a Single Item</h5>
 <pre>
 Dim strValue
 strValue = oDDEClient.RequestTextItem("PROGMAN", "PROGMAN", "Accessories")
 </pre>
 
-<h6>Opening a Conversation</h6>
+<h5>Opening a Conversation</h5>
 <pre>
 Dim oDDEConv
 Set oDDEConv = oDDEClient.OpenConversation("PROGMAN", "PROGMAN")
@@ -238,7 +271,7 @@ With oDDEConv
 End With
 </pre>
 
-<h6>Requesting Items From One Conversation</h6>
+<h5>Requesting Items From One Conversation</h5>
 <pre>
 Dim oDDEConv
 Set oDDEConv = GetObject("ddelink://PROGMAN|PROGMAN")
@@ -249,31 +282,47 @@ strValue2 = oDDEConv.RequestTextItem("Games")
 strValue3 = oDDEConv.RequestTextItem("Startup")
 </pre>
 
+<h5>Setting the Value For an Item On a Conversation</h5>
+<pre>
+Dim oDDEConv
+Set oDDEConv = GetObject("ddelink://Excel|[Book1]Sheet1")
+
+oDDEConv.PokeTextItem "R1C1", "a value"
+</pre>
+
+<h5>Sending a Command to a Running DDE Server</h5>
+<pre>
+Dim oDDEClient
+Set oDDEClient = CreateObject("DDECOMClient.DDEClient")
+
+oDDEClient.ExecuteCommand "Excel", "[Book1]Sheet1", "[App.Maximize()]"
+</pre>
+
 <hr>
 
 <a name="Warranty"></a>
-<h5>License & Warranty</h5>
+<h4>License & Warranty</h4>
 
 <p>
 This COM component is freeware - you get what you pay for, nothing more, nothing less.
 </p>
 
 <a name="SourceCode"></a>
-<h5>Source Code</h5>
+<h4>Source Code</h4>
 
 <p>
 The full source code (C++) is available from my web site listed below.
 </p>
 
 <a name="Contact"></a>
-<h5>Contact Details</h5>
+<h4>Contact Details</h4>
 
 <p>
 Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
-Web: <a href="http://www.cix.co.uk/~gort">www.cix.co.uk/~gort</a><br>
+Web: <a href="http://www.chrisoldwood.com">www.chrisoldwood.com</a><br>
 </p><p>
 Chris Oldwood<br>
-19th July 2007<br>
+11th July 2011<br>
 </p>
 
 </body>

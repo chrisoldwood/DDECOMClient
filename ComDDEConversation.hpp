@@ -70,6 +70,12 @@ public:
 	//! Request an item in CF_TEXT format.
 	virtual HRESULT COMCALL RequestTextItem(BSTR bstrItem, BSTR* pbstrValue);
 
+	//! Poke an item provided in CF_TEXT format.
+	virtual HRESULT COMCALL PokeTextItem(BSTR bstrItem, BSTR bstrValue);
+
+	//! Execute a command provided in CF_TEXT format.
+	virtual HRESULT COMCALL ExecuteCommand(BSTR bstrCommand);
+
 private:
 	//
 	// Members.

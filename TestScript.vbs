@@ -161,5 +161,6 @@ Set oDDEConv2   = nothing
 Set oDDEConv3   = nothing
 Set oDDEConvSet = nothing
 
+WScript.Echo ""
 WScript.Echo "------------------------------------------------------------"
 WScript.Echo "Tests completed"

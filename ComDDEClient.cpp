@@ -255,6 +255,70 @@ HRESULT COMCALL ComDDEClient::RequestTextItem(BSTR bstrService, BSTR bstrTopic, 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//! Poke an item provided in CF_TEXT format.
+
+HRESULT COMCALL ComDDEClient::PokeTextItem(BSTR bstrService, BSTR bstrTopic, BSTR bstrItem, BSTR bstrValue)
+{
+	HRESULT hr = E_FAIL;
+
+	try
+	{
+		// Validate input parameters.
+		if ( (bstrService == nullptr) || (bstrTopic == nullptr)
+		  || (bstrItem == nullptr)    || (bstrValue == nullptr) )
+			throw WCL::ComException(E_INVALIDARG, TXT("bstrService/bstrTopic/bstrItem/bstrValue is NULL"));
+
+		// Create the conversation.
+		tstring strService = W2T(bstrService);
+		tstring strTopic   = W2T(bstrTopic);
+
+		DDE::CltConvPtr pConv(m_pDDEClient->CreateConversation(strService.c_str(), strTopic.c_str()));
+
+		// Poke the item value.
+		tstring strItem  = W2T(bstrItem);
+		tstring strValue = W2T(bstrValue);
+
+		pConv->PokeString(strItem.c_str(), strValue.c_str(), CF_TEXT);
+
+		hr = S_OK;
+	}
+	COM_CATCH(hr)
+
+	return hr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Execute a command provided in CF_TEXT format.
+
+HRESULT COMCALL ComDDEClient::ExecuteCommand(BSTR bstrService, BSTR bstrTopic, BSTR bstrCommand)
+{
+	HRESULT hr = E_FAIL;
+
+	try
+	{
+		// Validate input parameters.
+		if ( (bstrService == nullptr) || (bstrTopic == nullptr) || (bstrCommand == nullptr) )
+			throw WCL::ComException(E_INVALIDARG, TXT("bstrService/bstrTopic/bstrCommand is NULL"));
+
+		// Create the conversation.
+		tstring strService = W2T(bstrService);
+		tstring strTopic   = W2T(bstrTopic);
+
+		DDE::CltConvPtr pConv(m_pDDEClient->CreateConversation(strService.c_str(), strTopic.c_str()));
+
+		// Send the command.
+		tstring strCommand = W2T(bstrCommand);
+
+		pConv->Execute(strCommand.c_str());
+
+		hr = S_OK;
+	}
+	COM_CATCH(hr)
+
+	return hr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 //! Aquire the singleton DDE Client.
 
 DDE::ClientPtr ComDDEClient::DDEClient()

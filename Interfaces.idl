@@ -37,6 +37,12 @@ interface IDDEClient : IDispatch
 
 	//! Request an item in CF_TEXT format.
 	HRESULT RequestTextItem([in] BSTR bstrService, [in] BSTR bstrTopic, [in] BSTR bstrItem, [out, retval] BSTR* pbstrValue);
+
+	//! Poke an item provided in CF_TEXT format.
+	HRESULT PokeTextItem([in] BSTR bstrService, [in] BSTR bstrTopic, [in] BSTR bstrItem, [in] BSTR bstrValue);
+
+	//! Execute a command provided in CF_TEXT format.
+	HRESULT ExecuteCommand([in] BSTR bstrService, [in] BSTR bstrTopic, [in] BSTR bstrCommand);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -74,6 +80,12 @@ interface IDDEConversation : IDispatch
 
 	//! Request an item in CF_TEXT format.
 	HRESULT RequestTextItem([in] BSTR bstrItem, [out, retval] BSTR* pbstrValue);
+
+	//! Poke an item provided in CF_TEXT format.
+	HRESULT PokeTextItem([in] BSTR bstrItem, [in] BSTR bstrValue);
+
+	//! Execute a command provided in CF_TEXT format.
+	HRESULT ExecuteCommand([in] BSTR bstrCommand);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

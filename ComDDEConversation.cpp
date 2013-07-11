@@ -253,3 +253,62 @@ HRESULT COMCALL ComDDEConversation::RequestTextItem(BSTR bstrItem, BSTR* pbstrVa
 
 	return hr;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//! Poke an item provided in CF_TEXT format.
+
+HRESULT COMCALL ComDDEConversation::PokeTextItem(BSTR bstrItem, BSTR bstrValue)
+{
+	HRESULT hr = E_FAIL;
+
+	try
+	{
+		// Validate input parameters.
+		if ( (bstrItem == nullptr) || (bstrValue == nullptr) )
+			throw WCL::ComException(E_INVALIDARG, TXT("bstrItem/bstrValue is NULL"));
+
+		// Conversation not open?
+		if (m_pConv.get() == nullptr)
+			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is not open"));
+
+		// Poke the item value.
+		tstring strItem  = W2T(bstrItem);
+		tstring strValue = W2T(bstrValue);
+
+		m_pConv->PokeString(strItem.c_str(), strValue.c_str(), CF_TEXT);
+
+		hr = S_OK;
+	}
+	COM_CATCH(hr)
+
+	return hr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Execute a command provided in CF_TEXT format.
+
+HRESULT COMCALL ComDDEConversation::ExecuteCommand(BSTR bstrCommand)
+{
+	HRESULT hr = E_FAIL;
+
+	try
+	{
+		// Validate input parameters.
+		if (bstrCommand == nullptr)
+			throw WCL::ComException(E_INVALIDARG, TXT("bstrCommand is NULL"));
+
+		// Conversation not open?
+		if (m_pConv.get() == nullptr)
+			throw WCL::ComException(E_UNEXPECTED, TXT("The conversation is not open"));
+
+		// Send the command.
+		tstring strCommand = W2T(bstrCommand);
+
+		m_pConv->Execute(strCommand.c_str());
+
+		hr = S_OK;
+	}
+	COM_CATCH(hr)
+
+	return hr;
+}
