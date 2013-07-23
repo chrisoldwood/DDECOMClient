@@ -46,13 +46,13 @@ WScript.Echo ""
 WScript.Echo "Maximise Excel via a conversation"
 WScript.Echo "------------------------------------------------------------"
 
-oDDEConv.ExecuteCommand "[App.Maximize()]"
+oDDEConv.ExecuteTextCommand "[App.Maximize()]"
 
 WScript.Echo ""
 WScript.Echo "Minimise Excel via the client"
 WScript.Echo "------------------------------------------------------------"
 
-oDDEClient.ExecuteCommand strService, strTopic, "[App.Minimize()]"
+oDDEClient.ExecuteTextCommand strService, strTopic, "[App.Minimize()]"
 
 ' Cleanup
 Set oDDEClient  = nothing

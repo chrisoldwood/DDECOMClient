@@ -58,6 +58,12 @@ public:
 	//! Get the Topic name.
 	virtual HRESULT COMCALL get_Topic(BSTR* pbstrTopic);
 
+	//! Set the maximum time (ms) to wait for a reply.
+	virtual HRESULT COMCALL put_Timeout(long timeout);
+
+	//! Get the maximum time (ms) to wait for a reply.
+	virtual HRESULT COMCALL get_Timeout(long* timeout);
+
 	//! Open the conversation.
 	virtual HRESULT COMCALL Open();
 
@@ -74,7 +80,7 @@ public:
 	virtual HRESULT COMCALL PokeTextItem(BSTR bstrItem, BSTR bstrValue);
 
 	//! Execute a command provided in CF_TEXT format.
-	virtual HRESULT COMCALL ExecuteCommand(BSTR bstrCommand);
+	virtual HRESULT COMCALL ExecuteTextCommand(BSTR bstrCommand);
 
 private:
 	//
@@ -82,6 +88,7 @@ private:
 	//
 	tstring			m_strService;		//!< The service name.
 	tstring			m_strTopic;			//!< The topic name.
+	DWORD			m_timeout;			//!< The conversation timeout.
 	DDE::ClientPtr	m_pDDEClient;		//!< The DDE client.
 	DDE::CltConvPtr	m_pConv;			//!< The underlying DDE conversation.
 };

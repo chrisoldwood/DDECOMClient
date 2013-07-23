@@ -30,6 +30,49 @@ ComDDEClient::~ComDDEClient()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//! Set the default maximum time (ms) to wait for a reply.
+
+HRESULT COMCALL ComDDEClient::put_DefaultTimeout(long timeout)
+{
+	HRESULT hr = E_FAIL;
+
+	try
+	{
+		// Validate parameters.
+		if (timeout < 0)
+			throw WCL::ComException(E_POINTER, TXT("dwTimeout is negative"));
+
+		m_pDDEClient->SetDefaultTimeout(timeout);
+
+		hr = S_OK;
+	}
+	COM_CATCH(hr)
+
+	return hr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Get the default maximum time (ms) to wait for a reply.
+
+HRESULT COMCALL ComDDEClient::get_DefaultTimeout(long* timeout)
+{
+	HRESULT hr = E_FAIL;
+
+	try
+	{
+		if (timeout == nullptr)
+			throw WCL::ComException(E_POINTER, TXT("pdwTimeout is NULL"));
+
+		*timeout = m_pDDEClient->DefaultTimeout();
+
+		hr = S_OK;
+	}
+	COM_CATCH(hr)
+
+	return hr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 //! Query for the collection of all running servers.
 
 HRESULT COMCALL ComDDEClient::RunningServers(SAFEARRAY** ppServers)
@@ -290,7 +333,7 @@ HRESULT COMCALL ComDDEClient::PokeTextItem(BSTR bstrService, BSTR bstrTopic, BST
 ////////////////////////////////////////////////////////////////////////////////
 //! Execute a command provided in CF_TEXT format.
 
-HRESULT COMCALL ComDDEClient::ExecuteCommand(BSTR bstrService, BSTR bstrTopic, BSTR bstrCommand)
+HRESULT COMCALL ComDDEClient::ExecuteTextCommand(BSTR bstrService, BSTR bstrTopic, BSTR bstrCommand)
 {
 	HRESULT hr = E_FAIL;
 
@@ -309,7 +352,7 @@ HRESULT COMCALL ComDDEClient::ExecuteCommand(BSTR bstrService, BSTR bstrTopic, B
 		// Send the command.
 		tstring strCommand = W2T(bstrCommand);
 
-		pConv->Execute(strCommand.c_str());
+		pConv->ExecuteString(strCommand.c_str(), CF_TEXT);
 
 		hr = S_OK;
 	}

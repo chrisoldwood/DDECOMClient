@@ -16,6 +16,16 @@ Dim oDDEClient
 Set oDDEClient = CreateObject("DDECOMClient.DDEClient")
 
 WScript.Echo ""
+WScript.Echo "Check and change the default timeout"
+WScript.Echo "------------------------------------------------------------"
+
+WScript.Echo "Default Timeout: " & oDDEClient.DefaultTimeout
+
+oDDEClient.DefaultTimeout = 60000
+
+WScript.Echo "Overridden Timeout: " & oDDEClient.DefaultTimeout
+
+WScript.Echo ""
 WScript.Echo "Request text item via client object"
 WScript.Echo "------------------------------------------------------------"
 
@@ -33,16 +43,22 @@ WScript.Echo "------------------------------------------------------------"
 Dim oDDEConv
 Set oDDEConv = CreateObject("DDECOMClient.DDEConversation")
 
+WScript.Echo "Initial Timeout: " & oDDEConv.Timeout
+
 With oDDEConv
 	.Service = strService
 	.Topic   = strTopic
+	.Timeout = 12000
 End With
+
+WScript.Echo "Overriden Timeout: " & oDDEConv.Timeout
 
 ' Open it and request an item.
 oDDEConv.Open()
 
 WScript.Echo "Conv: " & oDDEConv.Service & "|" & oDDEConv.Topic
 WScript.Echo "Open? " & oDDEConv.IsOpen()
+WScript.Echo "Post-Open Timeout: " & oDDEConv.Timeout
 WScript.Echo "Val : " & oDDEConv.RequestTextItem(strItem)
 
 ' Cleanup.
@@ -152,6 +168,10 @@ For i = LBound(astrServers) To UBound(astrServers)
 	WScript.Echo ""
 
 Next
+
+WScript.Echo ""
+WScript.Echo "Cleaning up"
+WScript.Echo "------------------------------------------------------------"
 
 ' Cleanup
 Set oDDEClient  = nothing

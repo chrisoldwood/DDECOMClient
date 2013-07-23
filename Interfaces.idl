@@ -23,6 +23,12 @@ interface IDDEConversations;
 ]
 interface IDDEClient : IDispatch
 {
+	//! Set the default maximum time (ms) to wait for a reply.
+	[propput] HRESULT DefaultTimeout([in] long timeout);
+
+	//! Get the default maximum time (ms) to wait for a reply.
+	[propget] HRESULT DefaultTimeout([out, retval] long* timeout);
+
 	//! Query for the collection of all running servers.
 	HRESULT RunningServers([out, retval] SAFEARRAY(VARIANT)* ppServers);
 
@@ -42,7 +48,7 @@ interface IDDEClient : IDispatch
 	HRESULT PokeTextItem([in] BSTR bstrService, [in] BSTR bstrTopic, [in] BSTR bstrItem, [in] BSTR bstrValue);
 
 	//! Execute a command provided in CF_TEXT format.
-	HRESULT ExecuteCommand([in] BSTR bstrService, [in] BSTR bstrTopic, [in] BSTR bstrCommand);
+	HRESULT ExecuteTextCommand([in] BSTR bstrService, [in] BSTR bstrTopic, [in] BSTR bstrCommand);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,6 +75,12 @@ interface IDDEConversation : IDispatch
 	//! Get the Topic name.
 	[propget] HRESULT Topic([out, retval] BSTR* pbstrTopic);
 
+	//! Set the maximum time (ms) to wait for a reply.
+	[propput] HRESULT Timeout([in] long timeout);
+
+	//! Get the maximum time (ms) to wait for a reply.
+	[propget] HRESULT Timeout([out, retval] long* timeout);
+
 	//! Open the conversation.
 	HRESULT Open();
 
@@ -85,7 +97,7 @@ interface IDDEConversation : IDispatch
 	HRESULT PokeTextItem([in] BSTR bstrItem, [in] BSTR bstrValue);
 
 	//! Execute a command provided in CF_TEXT format.
-	HRESULT ExecuteCommand([in] BSTR bstrCommand);
+	HRESULT ExecuteTextCommand([in] BSTR bstrCommand);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

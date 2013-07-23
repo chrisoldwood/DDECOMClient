@@ -38,6 +38,12 @@ public:
 	// IDDEClient methods.
 	//
 
+	//! Set the default maximum time (ms) to wait for a reply.
+	virtual HRESULT COMCALL put_DefaultTimeout(long timeout);
+
+	//! Get the default maximum time (ms) to wait for a reply.
+	virtual HRESULT COMCALL get_DefaultTimeout(long* timeout);
+
 	//! Query for the collection of all running servers.
 	virtual HRESULT COMCALL RunningServers(SAFEARRAY** ppServers);
 
@@ -57,7 +63,7 @@ public:
 	virtual HRESULT COMCALL PokeTextItem(BSTR bstrService, BSTR bstrTopic, BSTR bstrItem, BSTR bstrValue);
 
 	//! Execute a command provided in CF_TEXT format.
-	virtual HRESULT COMCALL ExecuteCommand(BSTR bstrService, BSTR bstrTopic, BSTR bstrCommand);
+	virtual HRESULT COMCALL ExecuteTextCommand(BSTR bstrService, BSTR bstrTopic, BSTR bstrCommand);
 
 	//
 	// Other methods.

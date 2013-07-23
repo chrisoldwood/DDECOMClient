@@ -18,6 +18,7 @@ ComDDEConversation::ComDDEConversation()
 	, m_pDDEClient(ComDDEClient::DDEClient())
 	, m_pConv(nullptr)
 {
+	m_timeout = m_pDDEClient->DefaultTimeout();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +31,7 @@ ComDDEConversation::ComDDEConversation(const tstring& strService, const tstring&
 	, m_pDDEClient(ComDDEClient::DDEClient())
 	, m_pConv(nullptr)
 {
+	m_timeout = m_pDDEClient->DefaultTimeout();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -39,6 +41,7 @@ ComDDEConversation::ComDDEConversation(DDE::CltConvPtr pConv)
 	: COM::IDispatchImpl<ComDDEConversation>(IID_IDDEConversation)
 	, m_strService(pConv->Service())
 	, m_strTopic(pConv->Topic())
+	, m_timeout(pConv->Timeout())
 	, m_pDDEClient(ComDDEClient::DDEClient())
 	, m_pConv(pConv)
 {
@@ -152,6 +155,53 @@ HRESULT COMCALL ComDDEConversation::get_Topic(BSTR* pbstrTopic)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//! Set the maximum time (ms) to wait for a reply.
+
+HRESULT COMCALL ComDDEConversation::put_Timeout(long timeout)
+{
+	HRESULT hr = E_FAIL;
+
+	try
+	{
+		// Validate parameters.
+		if (timeout < 0)
+			throw WCL::ComException(E_POINTER, TXT("dwTimeout is negative"));
+
+		m_timeout = timeout;
+
+		if (m_pConv.get() != nullptr)
+			m_pConv->SetTimeout(m_timeout);
+
+		hr = S_OK;
+	}
+	COM_CATCH(hr)
+
+	return hr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Get the maximum time (ms) to wait for a reply.
+
+HRESULT COMCALL ComDDEConversation::get_Timeout(long* timeout)
+{
+	HRESULT hr = E_FAIL;
+
+	try
+	{
+		if (timeout == nullptr)
+			throw WCL::ComException(E_POINTER, TXT("pdwTimeout is NULL"));
+
+		*timeout = (m_pConv.get() != nullptr) ? m_pConv->Timeout()
+		                                      : m_timeout;
+
+		hr = S_OK;
+	}
+	COM_CATCH(hr)
+
+	return hr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 //! Open the conversation.
 
 HRESULT COMCALL ComDDEConversation::Open()
@@ -166,6 +216,8 @@ HRESULT COMCALL ComDDEConversation::Open()
 
 		// Open it.
 		m_pConv = DDE::CltConvPtr(m_pDDEClient->CreateConversation(m_strService.c_str(), m_strTopic.c_str()));
+
+		m_pConv->SetTimeout(m_timeout);
 
 		hr = S_OK;
 	}
@@ -287,7 +339,7 @@ HRESULT COMCALL ComDDEConversation::PokeTextItem(BSTR bstrItem, BSTR bstrValue)
 ////////////////////////////////////////////////////////////////////////////////
 //! Execute a command provided in CF_TEXT format.
 
-HRESULT COMCALL ComDDEConversation::ExecuteCommand(BSTR bstrCommand)
+HRESULT COMCALL ComDDEConversation::ExecuteTextCommand(BSTR bstrCommand)
 {
 	HRESULT hr = E_FAIL;
 
@@ -304,7 +356,7 @@ HRESULT COMCALL ComDDEConversation::ExecuteCommand(BSTR bstrCommand)
 		// Send the command.
 		tstring strCommand = W2T(bstrCommand);
 
-		m_pConv->Execute(strCommand.c_str());
+		m_pConv->ExecuteString(strCommand.c_str(), CF_TEXT);
 
 		hr = S_OK;
 	}
