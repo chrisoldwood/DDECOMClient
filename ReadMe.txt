@@ -1,34 +1,40 @@
-DDE COM Client v1.0
+DDE COM Client v1.1
 ===================
 
+Introduction
+------------
 
-1: Installation
----------------
+This is a COM component designed to allow access to DDE servers from Scripting
+languages, such as VBScript. It provides support for the main DDE synchronous
+transaction types: XTYP_REQUEST, XTYP_POKE and XTYP_EXECUTE through ad-hoc
+queries and conversations. It also allows for querying running servers with
+the XTYP_WILDCONNECT transaction type.
 
-Copy the files DDECOMClient.* to a folder.
+This tool forms one part of my DDE toolkit, with the others being:-
+
+DDE Query: My original GUI based DDE query tool.
+DDE Command: A console app for querying DDE servers.
+
+Installation
+------------
+
 Register the component using "regsvr32.exe DDECOMClient.dll"
 
-
-2: Uninstallation
------------------
-
-Unregister the component using "regsvr32.exe /u DDECOMClient.dll"
-Delete the files DDECOMClient.*.
-
-
-3: Help/Manual
+Uninstallation
 --------------
 
-There is a HelpFile - DDECOMClient.html.
+Unregister the component using "regsvr32.exe /u DDECOMClient.dll"
 
+Documentation
+-------------
 
-4: Contact Details
+There is an HTML based manual - DDECOMClient.html.
+
+Contact Details
 ------------------
 
 Email: gort@cix.co.uk
-Web:   http://www.cix.co.uk/~gort
-
+Web:   http://www.chrisoldwood.com
 
 Chris Oldwood 
-
-19th July 2007
+24th July 2013
