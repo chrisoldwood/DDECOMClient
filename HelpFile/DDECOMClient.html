@@ -20,11 +20,12 @@ td		{ font-family: Verdana, Arial; font-size: 10pt; align: left }
 
 <p>
 This is a COM component to allow scripting of DDE Servers. It is an Automation
-Server (i.e. it is programmable via <code>IDispatch</code>) that houses a number
+Server (i.e. programmable via <code>IDispatch</code>) that houses a number
 of COM classes. The first is a <i>DDE Client</i>, which is a Singleton style
 object that can be used to make ad-hoc DDE queries and querying for running DDE
 servers. The second is for a specific <i>DDE Conversation</i> and can be used
-as an optimisation when you need to query many values from the same DDE source.
+as an optimisation when you need to query many values from the same DDE service
+and topic.
 </p>
 <p>
 At present it only supports the requesting of data in <code>CF_TEXT</code> format, which is
@@ -40,14 +41,14 @@ It supports the main synchronous transaction types, i.e. reading
 (<code>XTYP_EXECUTE</code>). The main feature of DDE that this component is missing
 is the asynchronous updating of values via advise loops (a.k.a. DDE Links).
 These have not been implemented as I didn't know if it was possible to handle
-COM events from scripting languages such as VBScript, which is it's intended
+COM events from scripting languages such as VBScript, which is its intended
 audience.
 </p>
 <p>
 The component is implemented in C++ using COM <i>dual</i> interfaces, so also
 supports early binding. However, if you're using C++ you might be better off
-using my underlying <a href="http://www.chrisoldwood.com/win32.htm#ncl">NCL</a>
-library/DDE classes directly.
+using my underlying <a href="http://www.chrisoldwood.com/win32.htm#ncl">NCL library/DDE classes</a>
+directly.
 </p>
 
 <hr>
@@ -56,12 +57,19 @@ library/DDE classes directly.
 <h4>The DDE Client Class</h4>
 
 <p>
-The DDE Client class is essentially a Singleton style class that provides
+The DDE Client class is essentially a Singleton object that provides
 simple access to DDE servers. If all you need to do is query for a few values
 from a DDE source or two you can do it with repeated calls to
-<i>RequestTextItem</i>. It also provides access to the Wildcard style request
+<code>RequestTextItem()</code>. It also provides access to the Wildcard style request
 (<code>XTYP_WILDCONNECT</code>) so that you can query for running servers and their topics.
 </p> 
+
+<h5>Property: long DefaultTimeout</h5>
+<p>
+This property controls the default timeout (in milliseconds) used for DDE
+transactions that occur on <i>new</i> conversations after it has been changed.
+The default timeout is set to 30 secs (i.e 30,000 ms).
+</p>
 
 <h5>string[] RunningServers()</h5>
 <p>
@@ -78,6 +86,7 @@ is an array of strings which are the topic names.
 <h5>IDDEConversation OpenConversation(string service, string topic)</h5>
 <p>
 Open a DDE conversation for a specific Server and Topic.<br/>
+<br/>
 See the <a href="#DDEConversation">DDE Conversation</a> class for other ways to
 open a conversation.
 </p>
@@ -85,10 +94,11 @@ open a conversation.
 <h5>IDDEConversations Conversations()</h5>
 <p>
 Get the collection of open DDE conversations. This collection is enumerable
-using the "For Each" idiom or can be indexed directly using the <i>Item</i>
-method<br/>
-Note: The Item method follows the VBScript and WMI convention of being
-<i>0-based</i>.
+using the "<code>for each</code>" idiom or can be indexed directly using the <code>Item()</code>
+method.<br/>
+<br/>
+<i>Note: The <code>Item()</code> method follows the VBScript and WMI convention of being
+0-based</i>.
 </p>
 
 <h5>string RequestTextItem(string service, string topic, string item)</h5>
@@ -105,11 +115,15 @@ passed in <code>CF_TEXT</code> (i.e. ANSI) format, even though it's being passed
 to the COM server via a Unicode string.
 </p>
 
-<h5>void ExecuteCommand(string service, string topic, string command)</h5>
+<h5>void ExecuteTextCommand(string service, string topic, string command)</h5>
 <p>
 Send a command string to the DDE server to be executed. The string will be 
 passed in <code>CF_TEXT</code> (i.e. ANSI) format, even though it's being passed
-to the COM server via a Unicode string.
+to the COM server via a Unicode string.<br>
+<br/>
+<i>Note: The XTYP_EXECUTE transaction type is an oddity because the format type
+is not passed to the DDE server in the request unike with the other
+transactions.</i>
 </p>
 
 <a name="DDEConversation"></a>
@@ -119,8 +133,8 @@ to the COM server via a Unicode string.
 The DDE Conversation class is really an optimisation (and an excuse for me to
 implement a COM collection) that avoids the overhead of creating a conversation
 every time an item is requested. If you have many values to request from a
-single Service|Topic pair you can open an explicit conversation either from
-the DDE Clients' <i>OpenConversation</i> method, or use the "ddelink:" moniker
+single <code>Service|Topic</code> pair you can open an explicit conversation either from
+the DDE Clients' <code>OpenConversation()</code> method, or use the "<code>ddelink:</code>" moniker
 namespace and then use that to request the items.
 </p> 
 
@@ -136,18 +150,25 @@ This property is the DDE topic name. It can be read at any time, but only
 modified when the conversation is not open.
 </p>
 
+<h5>Property: long Timeout</h5>
+<p>
+This property controls the timeout (in milliseconds) used for the DDE
+transactions that occur the conversation.
+</p>
+
 <h5>void Open()</h5>
 <p>
 Opens the conversation specified by the Service and Topic properties. If the
 conversation is already open, an error is returned.<br/>
+<br/>
 This method allows a DDE conversation to be opened by creating an explicit
 DDE Conversation object, setting the Service and Topic names and then calling
-Open().
+the <code>Open()</code> method.
 </p>
 
 <h5>bool IsOpen()</h5>
 <p>
-Checks if the conversation is currently open. Returns True or False.
+Checks if the conversation is currently open. Returns <code>True</code> or <code>False</code>.
 </p>
 
 <h5>void Close()</h5>
@@ -170,11 +191,15 @@ Set the value of a single item. The item will be passed in <code>CF_TEXT</code>
 Unicode string.
 </p>
 
-<h5>void ExecuteCommand(string command)</h5>
+<h5>void ExecuteTextCommand(string command)</h5>
 <p>
 Send a command string to the DDE server to be executed. The string will be 
 passed in <code>CF_TEXT</code> (i.e. ANSI) format, even though it's being passed
-to the COM server via a Unicode string.
+to the COM server via a Unicode string.<br/>
+<br/>
+<i>Note: The XTYP_EXECUTE transaction type is an oddity because the format type
+is not passed to the DDE server in the request unike with the other
+transactions.</i>
 </p>
 
 <a name="Moniker"></a>
@@ -195,7 +220,7 @@ links are added the syntax can be updated to allow a "!Item" style suffix.
 </p>
 
 <a name="Errors"></a>
-<h4>Errors</h4>
+<h4>Error Handling</h4>
 
 <p>
 All the COM objects support <code>IErrorInfo</code>, so you will receive
@@ -269,6 +294,8 @@ With oDDEConv
     .Service = "PROGMAN"
     .Topic   = "PROGMAN"
 End With
+
+oDDEConv.Open()
 </pre>
 
 <h5>Requesting Items From One Conversation</h5>
@@ -295,7 +322,7 @@ oDDEConv.PokeTextItem "R1C1", "a value"
 Dim oDDEClient
 Set oDDEClient = CreateObject("DDECOMClient.DDEClient")
 
-oDDEClient.ExecuteCommand "Excel", "[Book1]Sheet1", "[App.Maximize()]"
+oDDEClient.ExecuteTextCommand "Excel", "[Book1]Sheet1", "[App.Maximize()]"
 </pre>
 
 <hr>
@@ -322,7 +349,7 @@ Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
 Web: <a href="http://www.chrisoldwood.com">www.chrisoldwood.com</a><br>
 </p><p>
 Chris Oldwood<br>
-11th July 2011<br>
+24th July 2013<br>
 </p>
 
 </body>
