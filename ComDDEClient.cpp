@@ -331,7 +331,7 @@ HRESULT COMCALL ComDDEClient::PokeTextItem(BSTR bstrService, BSTR bstrTopic, BST
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//! Execute a command provided in CF_TEXT format.
+//! Execute a command provided in CF_TEXT/CF_UNICODETEXT format.
 
 HRESULT COMCALL ComDDEClient::ExecuteTextCommand(BSTR bstrService, BSTR bstrTopic, BSTR bstrCommand)
 {
@@ -352,7 +352,7 @@ HRESULT COMCALL ComDDEClient::ExecuteTextCommand(BSTR bstrService, BSTR bstrTopi
 		// Send the command.
 		tstring strCommand = W2T(bstrCommand);
 
-		pConv->ExecuteString(strCommand.c_str(), CF_TEXT);
+		pConv->ExecuteString(strCommand.c_str());
 
 		hr = S_OK;
 	}

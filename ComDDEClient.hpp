@@ -62,7 +62,7 @@ public:
 	//! Poke an item provided in CF_TEXT format.
 	virtual HRESULT COMCALL PokeTextItem(BSTR bstrService, BSTR bstrTopic, BSTR bstrItem, BSTR bstrValue);
 
-	//! Execute a command provided in CF_TEXT format.
+	//! Execute a command provided in CF_TEXT/CF_UNICODETEXT format.
 	virtual HRESULT COMCALL ExecuteTextCommand(BSTR bstrService, BSTR bstrTopic, BSTR bstrCommand);
 
 	//
