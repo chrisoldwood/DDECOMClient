@@ -13,7 +13,7 @@ td		{ font-family: Verdana, Arial; font-size: 10pt; align: left }
 
 <body>
 
-<h3 align="center">DDE COM Client v1.1</h3>
+<h3 align="center">DDE COM Client v1.1.1</h3>
 
 <a name="Introduction"></a>
 <h4>Introduction</h4>
@@ -117,13 +117,12 @@ to the COM server via a Unicode string.
 
 <h5>void ExecuteTextCommand(string service, string topic, string command)</h5>
 <p>
-Send a command string to the DDE server to be executed. The string will be 
-passed in <code>CF_TEXT</code> (i.e. ANSI) format, even though it's being passed
-to the COM server via a Unicode string.<br>
+Send a command string to the DDE server to be executed.<br>
 <br/>
-<i>Note: The XTYP_EXECUTE transaction type is an oddity because the format type
-is not passed to the DDE server in the request unike with the other
-transactions.</i>
+<i>Note: The command is always sent in CF_TEXT for an ANSI build and
+CF_UNICODETEXT for a Unicode build. This is to work around a bug in
+Windows/DDEML that shows up when sending a CF_TEXT format command from a Unicode
+DDE client to an ANSI DDE server.</i>
 </p>
 
 <a name="DDEConversation"></a>
@@ -193,13 +192,12 @@ Unicode string.
 
 <h5>void ExecuteTextCommand(string command)</h5>
 <p>
-Send a command string to the DDE server to be executed. The string will be 
-passed in <code>CF_TEXT</code> (i.e. ANSI) format, even though it's being passed
-to the COM server via a Unicode string.<br/>
+Send a command string to the DDE server to be executed.<br>
 <br/>
-<i>Note: The XTYP_EXECUTE transaction type is an oddity because the format type
-is not passed to the DDE server in the request unike with the other
-transactions.</i>
+<i>Note: The command is always sent in CF_TEXT for an ANSI build and
+CF_UNICODETEXT for a Unicode build. This is to work around a bug in
+Windows/DDEML that shows up when sending a CF_TEXT format command from a Unicode
+DDE client to an ANSI DDE server.</i>
 </p>
 
 <a name="Moniker"></a>
@@ -349,7 +347,7 @@ Email: <a href="mailto://gort@cix.co.uk">gort@cix.co.uk</a><br>
 Web: <a href="http://www.chrisoldwood.com">www.chrisoldwood.com</a><br>
 </p><p>
 Chris Oldwood<br>
-24th July 2013<br>
+8th August 2013<br>
 </p>
 
 </body>
