@@ -27,35 +27,6 @@ Global
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
 	EndGlobalSection
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 7
-		SccLocalPath0 = .
-		CanCheckoutShared = true
-		SolutionUniqueID = {69F78BB5-15F7-48B4-A3C1-A3DBE0F1C7A7}
-		SccProjectUniqueName1 = DDECOMClient.vcproj
-		SccLocalPath1 = .
-		CanCheckoutShared = true
-		SccProjectUniqueName2 = ..\\Lib\\Core\\Core.vcproj
-		SccProjectName2 = \u0022$/Win32/Lib/Core\u0022,\u0020QWDAAAAA
-		SccLocalPath2 = ..\\Lib\\Core
-		CanCheckoutShared = true
-		SccProjectUniqueName3 = ..\\Lib\\WCL\\Wcl.vcproj
-		SccProjectName3 = \u0022$/Win32/Lib/WCL\u0022,\u0020HPAAAAAA
-		SccLocalPath3 = ..\\Lib\\WCL
-		CanCheckoutShared = true
-		SccProjectUniqueName4 = ..\\Lib\\COM\\COM.vcproj
-		SccProjectName4 = \u0022$/Win32/Lib/COM\u0022,\u0020FCEAAAAA
-		SccLocalPath4 = ..\\Lib\\COM
-		CanCheckoutShared = true
-		SccProjectUniqueName5 = ..\\Lib\\NCL\\NCL.vcproj
-		SccProjectName5 = \u0022$/Win32/Lib/NCL\u0022,\u0020JRCAAAAA
-		SccLocalPath5 = ..\\Lib\\NCL
-		CanCheckoutShared = true
-		SccProjectUniqueName6 = Test\\Test.vcproj
-		SccProjectName6 = \u0022$/Win32/DDECOMClient/Test\u0022,\u0020XFEAAAAA
-		SccLocalPath6 = Test
-		CanCheckoutShared = true
-	EndGlobalSection
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
 		Release = Release

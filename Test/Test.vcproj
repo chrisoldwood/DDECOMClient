@@ -4,10 +4,6 @@
 	Version="7.10"
 	Name="Test"
 	ProjectGUID="{DE18A7DE-6E20-43C1-BEFF-98F17DD545B9}"
-	SccProjectName="SAK"
-	SccAuxPath="SAK"
-	SccLocalPath="SAK"
-	SccProvider="SAK"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
