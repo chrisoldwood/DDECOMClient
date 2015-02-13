@@ -10,6 +10,7 @@
 #include <COM/IDispatchImpl.hpp>
 #include <NCL/DDECltConv.hpp>
 #include <NCL/DDECltConvPtr.hpp>
+#include <NCL/DDEClient.hpp>
 
 #if _MSC_VER > 1000
 #pragma once
