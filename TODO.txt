@@ -3,3 +3,5 @@
 - Add support for advise loops.
 
 - Change "ddelink:" moniker to "ddeconv:" and add a proper "ddelink:" moniker.
+
+- Investigate per-user redirection so we can avoid building and running tests as an admin.
