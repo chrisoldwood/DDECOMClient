@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="DDECOMClient"
 	ProjectGUID="{0788BF9F-7550-404F-AAF4-A7F6C98F2983}"
+	RootNamespace="DDECOMClient"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -72,6 +73,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				ModuleDefinitionFile="..\Lib\COM\InprocServer.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -155,6 +157,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
+				PerUserRedirection="true"
 				ModuleDefinitionFile="..\Lib\COM\InprocServer.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -190,15 +193,19 @@
 	<References>
 		<ProjectReference
 			ReferencedProjectIdentifier="{A5573046-6334-4DDA-94B5-EA329D0B4124}"
+			RelativePathToProject="..\Lib\COM\COM.vcproj"
 		/>
 		<ProjectReference
 			ReferencedProjectIdentifier="{790BC113-52FB-4565-8968-79B8B011C520}"
+			RelativePathToProject="..\Lib\Core\Core.vcproj"
 		/>
 		<ProjectReference
 			ReferencedProjectIdentifier="{FAB8D717-85EC-4896-B5DC-FDF0A0B67C92}"
+			RelativePathToProject="..\Lib\NCL\NCL.vcproj"
 		/>
 		<ProjectReference
 			ReferencedProjectIdentifier="{9B0335B6-93BE-4604-8497-27431874D758}"
+			RelativePathToProject="..\Lib\WCL\Wcl.vcproj"
 		/>
 	</References>
 	<Files>

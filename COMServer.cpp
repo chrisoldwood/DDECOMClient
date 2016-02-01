@@ -28,13 +28,16 @@ ComServer::~ComServer()
 
 HRESULT ComServer::DllRegisterServer()
 {
-	HRESULT hr = S_OK;
+	HRESULT hr = E_FAIL;
 
 	// Do the standard registration.
 	hr = InprocServer::DllRegisterServer();
 
+	if (FAILED(hr))
+		return hr;
+
 	// Do the custom registration.
-	ComDDEClassFactory::RegisterNamespace();
+	ComDDEClassFactory::RegisterNamespace(COM::MACHINE);
 
 	return hr;
 }
@@ -44,13 +47,34 @@ HRESULT ComServer::DllRegisterServer()
 
 HRESULT ComServer::DllUnregisterServer()
 {
-	HRESULT hr = S_OK;
+	HRESULT hr = E_FAIL;
 
 	// Do the custom unregistration.
-	ComDDEClassFactory::UnregisterNamespace();
+	ComDDEClassFactory::UnregisterNamespace(COM::MACHINE);
 
 	// Do the standard unregistration.
 	hr = InprocServer::DllUnregisterServer();
+
+	return hr;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//! Register or unregister the server to/from the registry.
+
+HRESULT ComServer::DllInstall(bool install, const tchar* cmdLine)
+{
+	HRESULT hr = E_FAIL;
+
+	hr = InprocServer::DllInstall(install, cmdLine);
+
+	if (FAILED(hr))
+		return hr;
+
+	bool perUser = ( (cmdLine != nullptr) && (tstricmp(cmdLine, TXT("user")) == 0) );
+	COM::Scope scope = (perUser) ? COM::USER : COM::MACHINE;
+
+	(install) ? ComDDEClassFactory::RegisterNamespace(scope)
+	          : ComDDEClassFactory::UnregisterNamespace(scope);
 
 	return hr;
 }

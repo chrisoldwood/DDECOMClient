@@ -236,15 +236,15 @@ HRESULT COMCALL ComDDEClassFactory::IsRunning(LPOLESTR /*pszItem*/)
 ////////////////////////////////////////////////////////////////////////////////
 //! Register the moniker namespace in the registry.
 
-void ComDDEClassFactory::RegisterNamespace()
+void ComDDEClassFactory::RegisterNamespace(COM::Scope scope)
 {
-	COM::RegisterMonikerPrefix(g_pszRegKey, TXT("DDEClassFactory"), CLSID_DDEClassFactory);
+	COM::RegisterMonikerPrefix(scope, g_pszRegKey, TXT("DDEClassFactory"), CLSID_DDEClassFactory);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Unregister the moniker namespace from the registry.
 
-void ComDDEClassFactory::UnregisterNamespace()
+void ComDDEClassFactory::UnregisterNamespace(COM::Scope scope)
 {
-	COM::UnregisterMonikerPrefix(g_pszRegKey);
+	COM::UnregisterMonikerPrefix(scope, g_pszRegKey);
 }

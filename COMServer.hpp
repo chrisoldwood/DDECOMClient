@@ -41,6 +41,9 @@ protected:
 	//! Unregister the server from the registry.
 	virtual HRESULT DllUnregisterServer();
 
+	//! Register or unregister the server to/from the registry.
+	virtual HRESULT DllInstall(bool install, const tchar* cmdLine);
+
 	DEFINE_REGISTRATION_TABLE(TXT("DDECOMClient"), LIBID_DDECOMClientLib, 1, 0)
 		DEFINE_CLASS_REG_INFO(CLSID_DDEClient,       TXT("DDEClient"),       TXT("1"), COM::MAIN_THREAD_APT)
 		DEFINE_CLASS_REG_INFO(CLSID_DDEConversation, TXT("DDEConversation"), TXT("1"), COM::MAIN_THREAD_APT)

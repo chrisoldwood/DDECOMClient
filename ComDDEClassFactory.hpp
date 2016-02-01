@@ -8,6 +8,7 @@
 #define COMDDECLASSFACTORY_HPP
 
 #include <COM/ClassFactory.hpp>
+#include <COM/RegUtils.hpp>
 
 #if _MSC_VER > 1000
 #pragma once
@@ -73,10 +74,10 @@ public:
 	//
 
 	//! Register the moniker namespace in the registry.
-	static void RegisterNamespace();
+	static void RegisterNamespace(COM::Scope scope);
 
 	//! Unregister the moniker namespace from the registry.
-	static void UnregisterNamespace();
+	static void UnregisterNamespace(COM::Scope scope);
 
 private:
 	//
