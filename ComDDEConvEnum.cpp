@@ -6,6 +6,7 @@
 #include "Common.hpp"
 #include "ComDDEConvEnum.hpp"
 #include "ComDDEConversation.hpp"
+#include <algorithm>
 
 ////////////////////////////////////////////////////////////////////////////////
 //! Default constructor.

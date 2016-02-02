@@ -10,6 +10,11 @@
 #include <WCL/VariantBool.hpp>
 #import "../DDECOMClient.tlb" raw_interfaces_only no_smart_pointers
 
+#ifdef _MSC_VER
+// declaration of 'Xxx' hides global declaration (IUnknownPtr && IEnumVARIANTPtr).
+#pragma warning(disable : 4459)
+#endif
+
 TEST_SET(DDEConversations)
 {
 	typedef WCL::ComPtr<DDECOMClientLib::IDDEClient> IDDEClientPtr;
