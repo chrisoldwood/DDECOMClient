@@ -1,3 +1,6 @@
+' NOTE: Excel must be running for these tests to work.
+' 32-bit Windows: > cscript //nologo TestScript2.vbs
+' 64-bit Windows: > C:\Windows\SysWOW64\cscript.exe //nologo TestScript2.vbs
 Option Explicit
 
 ' Setup the query parameters.

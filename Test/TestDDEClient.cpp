@@ -48,9 +48,7 @@ TEST_CASE("running servers can be retrieved")
 
 	VariantArray avtServers(pServersArray);
 
-	TEST_TRUE(avtServers.Size() >= 3);
-	TEST_TRUE(std::find_if(avtServers.begin(), avtServers.end(), Compare(L"Folders")) != avtServers.end());
-	TEST_TRUE(std::find_if(avtServers.begin(), avtServers.end(), Compare(L"Shell")) != avtServers.end());
+	TEST_TRUE(avtServers.Size() >= 1);
 	TEST_TRUE(std::find_if(avtServers.begin(), avtServers.end(), Compare(L"PROGMAN")) != avtServers.end());
 }
 TEST_CASE_END
@@ -61,11 +59,11 @@ TEST_CASE("supported topics for a service can be retrieved")
 
 	SAFEARRAY* pTopicsArray = nullptr;
 
-	TEST_TRUE(pDDEClient->GetServerTopics(WCL::ComStr(TXT("Shell")).Get(), &pTopicsArray) == S_OK);
+	TEST_TRUE(pDDEClient->GetServerTopics(WCL::ComStr(TXT("PROGMAN")).Get(), &pTopicsArray) == S_OK);
 
 	VariantArray avtTopics(pTopicsArray);
 
-	TEST_TRUE(std::find_if(avtTopics.begin(), avtTopics.end(), Compare(L"AppProperties")) != avtTopics.end());
+	TEST_TRUE(std::find_if(avtTopics.begin(), avtTopics.end(), Compare(L"PROGMAN")) != avtTopics.end());
 }
 TEST_CASE_END
 
@@ -81,7 +79,7 @@ TEST_CASE("single text item for a service and topic can be retrieved")
 	HRESULT result = pDDEClient->RequestTextItem(bstrService.Get(), bstrTopic.Get(), bstrItem.Get(), AttachTo(bstrValue));
 
 	TEST_TRUE(result == S_OK);
-	TEST_TRUE(wcsstr(bstrValue.Get(), L"Windows Explorer") != nullptr);
+	TEST_TRUE(wcsstr(bstrValue.Get(), L"Notepad") != nullptr);
 }
 TEST_CASE_END
 

@@ -1,3 +1,5 @@
+' 32-bit Windows: > cscript //nologo TestScript.vbs
+' 64-bit Windows: > C:\Windows\SysWOW64\cscript.exe //nologo TestScript.vbs
 Option Explicit
 
 ' Setup the query parameters.
