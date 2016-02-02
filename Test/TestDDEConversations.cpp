@@ -3,7 +3,7 @@
 //! \brief  The unit tests for the DDEConversations class.
 //! \author Chris Oldwood
 
-#include "stdafx.h"
+#include "Common.hpp"
 #include <Core/UnitTest.hpp>
 #include <WCL/ComPtr.hpp>
 #include <WCL/ComStr.hpp>
