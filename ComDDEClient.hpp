@@ -69,7 +69,7 @@ public:
 	// Other methods.
 	//
 
-	//! Aquire the singleton DDE Client.
+	//! Acquire the singleton DDE Client.
 	static DDE::ClientPtr DDEClient();
 
 private:

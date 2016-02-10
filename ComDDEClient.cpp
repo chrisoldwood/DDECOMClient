@@ -362,7 +362,7 @@ HRESULT COMCALL ComDDEClient::ExecuteTextCommand(BSTR bstrService, BSTR bstrTopi
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//! Aquire the singleton DDE Client.
+//! Acquire the singleton DDE Client.
 
 DDE::ClientPtr ComDDEClient::DDEClient()
 {
