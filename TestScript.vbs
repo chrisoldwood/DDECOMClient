@@ -1,5 +1,5 @@
-' 32-bit Windows: > cscript //nologo TestScript.vbs
-' 64-bit Windows: > C:\Windows\SysWOW64\cscript.exe //nologo TestScript.vbs
+' Native 32-bit & 64-bit: > cscript //nologo TestScript.vbs
+' 32-bit on 64-bit (WoW): > %SystemRoot%\SysWOW64\cscript.exe //nologo TestScript.vbs
 Option Explicit
 
 ' Setup the query parameters.
