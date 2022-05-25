@@ -79,7 +79,7 @@ TEST_CASE("single text item for a service and topic can be retrieved")
 	HRESULT result = pDDEClient->RequestTextItem(bstrService.Get(), bstrTopic.Get(), bstrItem.Get(), AttachTo(bstrValue));
 
 	TEST_TRUE(result == S_OK);
-	TEST_TRUE(wcsstr(bstrValue.Get(), L"Notepad") != nullptr);
+	TEST_TRUE(wcsstr(bstrValue.Get(), L"Accessories") != nullptr);
 }
 TEST_CASE_END
 

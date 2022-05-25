@@ -112,7 +112,7 @@ TEST_CASE("CF_TEXT item can be requested")
 	WCL::ComStr bstrValue;
 
 	TEST_TRUE(pConv->RequestTextItem(bstrItem.Get(), AttachTo(bstrValue)) == S_OK);
-	TEST_TRUE(wcsstr(bstrValue.Get(), L"Notepad") != nullptr);
+	TEST_TRUE(wcsstr(bstrValue.Get(), L"Accessories") != nullptr);
 }
 TEST_CASE_END
 
