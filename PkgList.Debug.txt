@@ -1,0 +1,5 @@
+.\ReadMe.txt
+.\RelNotes.txt
+.\Debug\Win32\DDECOMClient32.dll
+.\Debug\x64\DDECOMClient64.dll
+.\HelpFile\DDECOMClient.html

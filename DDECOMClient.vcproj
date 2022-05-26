@@ -568,6 +568,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\PkgList.Debug.txt"
+			>
+		</File>
+		<File
+			RelativePath=".\PkgList.Release.txt"
+			>
+		</File>
+		<File
 			RelativePath=".\ReadMe.txt"
 			>
 		</File>
