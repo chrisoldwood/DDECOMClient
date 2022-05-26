@@ -39,5 +39,25 @@ There is also one for upgrading to a later version of Visual C++:-
 C:\> Win32\Scripts\SetVars vc140
 C:\> Win32\Scripts\Upgrade Win32\DDECOMClient\DDECOMClient.sln
 
+Registry Settings
+-----------------
+
+You can view the Registry configuration with these PowerShell one-liners:
+
+PS> gci -r HKCU:\Software\Classes\DDE* |
+      foreach { Get-ItemProperty $_.PSPath } |
+      select PSPath,'(Default)'
+
+PS> gci -r HKCU:\Software\Classes\DDE* |
+      foreach { Get-ItemProperty $_.PSPath } |
+      select -Expand '(Default)' |
+      where { $_ -like '{*}' } |
+      foreach { gci -r HKCU:\Software\Classes\CLSID\$_ } |
+      select -Expand PSPath |
+      foreach { Get-ItemProperty $_ | select PSPath,'(Default)' }
+
+Note: For the 32-bit settings on 64-bit Windows you need to adjust
+'Classes\CLSID' to 'Classes\WOW6432Node\CLSID' in the second query.
+
 Chris Oldwood 
 27th June 2014

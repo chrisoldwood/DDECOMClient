@@ -564,6 +564,10 @@
 			</File>
 		</Filter>
 		<File
+			RelativePath=".\DevNotes.txt"
+			>
+		</File>
+		<File
 			RelativePath=".\ReadMe.txt"
 			>
 		</File>
