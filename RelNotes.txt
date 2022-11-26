@@ -1,18 +1,18 @@
-Version 1.1.1
-=============
+11/08/2013: v1.1.1
+==================
 
 - Worked around a XTYP_EXECUTE bug in Windows/DDEML for a CF_TEXT command.
 
-Version 1.1
-===========
+24/07/2013: v1.1
+================
 
 - Added support for the XTYP_POKE and XTYP_EXECUTE transaction types.
 - Exposed a property to allow the transaction timeout to be configured.
 - Switched to Unicode build by default and fixed code to build as x64.
 - Fixed some bugs in the documentation examples.
                   
-Version 1.0
-===========
+19/07/2007: v1.0
+================
 
 - Basic DDE client with support for requesting CF_TEXT values.
 - Enumeration of running DDE servers.
