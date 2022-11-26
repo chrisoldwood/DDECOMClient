@@ -39,6 +39,29 @@ There is also one for upgrading to a later version of Visual C++:-
 C:\> Win32\Scripts\SetVars vc140
 C:\> Win32\Scripts\Upgrade Win32\DDECOMClient\DDECOMClient.sln
 
+Tests
+-----
+
+A separate project exists in the solution with unit tests:-
+
+> Test\Debug\%VC_PLATFORM%\Test.exe
+
+There is a VBScript file which some standalone tests:-
+
+> cscript //nologo TestScript.vbs
+
+(For 32-bit on 64-bit Windows)
+
+> %SystemRoot%\SysWOW64\cscript.exe //nologo TestScript.vbs
+
+There is also a VBScript file which some tests that drive Excel:-
+
+> cscript //nologo TestScriptExcel.vbs
+
+(For 32-bit on 64-bit Windows)
+
+> %SystemRoot%\SysWOW64\cscript.exe //nologo TestScriptExcel.vbs
+
 Registry Settings
 -----------------
 
@@ -58,6 +81,16 @@ PS> gci -r HKCU:\Software\Classes\DDE* |
 
 Note: For the 32-bit settings on 64-bit Windows you need to adjust
 'Classes\CLSID' to 'Classes\WOW6432Node\CLSID' in the second query.
+
+Release Checklist
+-----------------
+
+- Update version number (Dll.rcv).
+- Update documentation (ReadMe.txt, RelNotes.txt, and manual).
+- Build and run tests.
+- Build packages (zip).
+- Tag repository.
+- Upload packages.
 
 Chris Oldwood 
 27th June 2014
