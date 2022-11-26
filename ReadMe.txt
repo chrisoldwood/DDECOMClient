@@ -27,12 +27,27 @@ https://github.com/chrisoldwood/DDECOMClient
 Installation
 ------------
 
-Register the component using "regsvr32.exe DDECOMClient.dll"
+Register the COM component using the version of regsvr32.exe that matches the
+relevant Windows architecture.
+
+32-bit DLL on 32-bit Windows:
+
+> regsvr32.exe DDECOMClient32.dll
+
+64-bit DLL on 64-bit Windows:
+
+> regsvr32.exe DDECOMClient64.dll
+
+32-bit DLL on 64-bit Windows:
+
+> %SystemRoot%\SysWOW64\regsvr32.exe DDECOMClient32.dll
 
 Uninstallation
 --------------
 
-Unregister the component using "regsvr32.exe /u DDECOMClient.dll"
+Unregister the component using the relevant regsvr32.exe.
+
+> regsvr32.exe /u DDECOMClient<32|64>.dll
 
 Documentation
 -------------

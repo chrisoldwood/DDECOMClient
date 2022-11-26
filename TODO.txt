@@ -5,5 +5,3 @@
 - Change "ddelink:" moniker to "ddeconv:" and add a proper "ddelink:" moniker.
 
 - Consider adding XxxUnicodeTextItem to allow CF_UNICODETEXT to be used for the data format.
-
-- Add 32-bit and 64-bit registration details to the ReadMe.
