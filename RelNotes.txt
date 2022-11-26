@@ -1,3 +1,8 @@
+24/11/2022: v1.1.2
+==================
+
+- Added binary for 64-bit Windows.
+
 11/08/2013: v1.1.1
 ==================
 
@@ -19,4 +24,4 @@
 - Creation of conversations using monikers.
 
 Chris Oldwood 
-8th August 2013
+24th November 2022

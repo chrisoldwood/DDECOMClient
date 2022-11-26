@@ -1,4 +1,4 @@
-DDE COM Client v1.1.1
+DDE COM Client v1.1.2
 =====================
 
 Introduction
@@ -61,4 +61,4 @@ Email: gort@cix.co.uk
 Web:   http://www.chrisoldwood.com
 
 Chris Oldwood 
-8th August 2013
+24th November 2022
