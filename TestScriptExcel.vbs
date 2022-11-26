@@ -1,6 +1,6 @@
 ' NOTE: Excel must be running for these tests to work.
-' Native 32-bit & 64-bit: > cscript //nologo TestScript2.vbs
-' 32-bit on 64-bit (WoW): > %SystemRoot%\SysWOW64\cscript.exe //nologo TestScript2.vbs
+' Native 32-bit & 64-bit: > cscript //nologo TestScriptExcel.vbs
+' 32-bit on 64-bit (WoW): > %SystemRoot%\SysWOW64\cscript.exe //nologo TestScriptExcel.vbs
 Option Explicit
 
 ' Setup the query parameters.
