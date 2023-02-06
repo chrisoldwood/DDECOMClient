@@ -46,7 +46,7 @@ TEST_CASE("running servers can be retrieved")
 
 	TEST_TRUE(pDDEClient->RunningServers(&pServersArray) == S_OK);
 
-	VariantArray avtServers(pServersArray);
+	VariantArray avtServers(pServersArray, VT_VARIANT, true);
 
 	TEST_TRUE(avtServers.Size() >= 1);
 	TEST_TRUE(std::find_if(avtServers.begin(), avtServers.end(), Compare(L"PROGMAN")) != avtServers.end());
@@ -61,7 +61,7 @@ TEST_CASE("supported topics for a service can be retrieved")
 
 	TEST_TRUE(pDDEClient->GetServerTopics(WCL::ComStr(TXT("PROGMAN")).Get(), &pTopicsArray) == S_OK);
 
-	VariantArray avtTopics(pTopicsArray);
+	VariantArray avtTopics(pTopicsArray, VT_VARIANT, true);
 
 	TEST_TRUE(std::find_if(avtTopics.begin(), avtTopics.end(), Compare(L"PROGMAN")) != avtTopics.end());
 }

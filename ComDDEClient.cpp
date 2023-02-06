@@ -96,7 +96,7 @@ HRESULT COMCALL ComDDEClient::RunningServers(SAFEARRAY** ppServers)
 		// Get the list of running servers.
 		m_pDDEClient->QueryServers(astrServers);
 
-		VariantArray           avtServers(astrServers.Size());
+		VariantArray           avtServers(astrServers.Size(), VT_VARIANT);
 		VariantArray::iterator itServer = avtServers.begin();
 
 		// Create the return array.
@@ -150,7 +150,7 @@ HRESULT COMCALL ComDDEClient::GetServerTopics(BSTR bstrService, SAFEARRAY** ppTo
 		// Get the list of topics for the server.
 		m_pDDEClient->QueryServerTopics(strService.c_str(), astrTopics);
 
-		VariantArray           avtTopics(astrTopics.Size());
+		VariantArray           avtTopics(astrTopics.Size(), VT_VARIANT);
 		VariantArray::iterator itTopic = avtTopics.begin();
 
 		// Create the return array.
